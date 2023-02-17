@@ -1,54 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Register</title>
-		<!-- -----------Google Fonts------------>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;500;900&display=swap" rel="stylesheet" />
-		<!-- -----------Fonts Awesome----------->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-		<!-- -----------Jquery------------------>
-		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-		<!-- -----------Bootstrap--------------->
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-		<!-- -----------Stylesheet-------------->
-		<link rel="stylesheet/less" type="text/css" href="../Assets/style/login.less" />
-		<!-- -----------Script------------------>
-		<!-- -----------LESS-------------------->
-		<script src="https://cdn.jsdelivr.net/npm/less@4"></script>
-	</head>
-	<body>
-		<!-- ------------------Error Indicator-------->
-		<div class="error">
-			<p>Invalid username, Invalid username, Invalid username, Invalid username, Invalid username, Invalid username,</p>
-		</div>
-        <!-------------------------------------------->
-        <!-- ---------------------------Register Form-------------------------------->
-		<form action="/Products/home.html" method="post" class="register">
-            <ul>
-                <li><i class="far fa-address-card"></i><input type="text" placeholder="First Name" name="first_name" required/></li>
-                <li><i class="far fa-address-card"></i><input type="text" placeholder="Last Name" name="last_name" required/></li>
-                <li><i class="fas fa-at"></i><input type="email" placeholder="Email" name="email" required/></li>
-                <li><i class="fas fa-phone"></i><input type="number" placeholder="Contact #" name="contact" required/></li>
-                <li><i class="fas fa-lock"></i><input type="password" placeholder="Password" name="password" required/></li>
-                <li><i class="fas fa-check"></i><input type="password" placeholder="Confirm Password" name="confirm_password" required/></li>
-            </ul>
-            <!--------------For Button Animation---------->
-			<a>
-				<span></span>
-				<span></span>
-				<span></span>
-				<span></span>
-				<input type="submit" value="Register" />
-			</a>
-            <!-------------------------------------------->
-			<p>Already have an account? <a href="login.html">Login</a></p>
-		</form>
-        <!------------------------------------------------------------------------->
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="E-commerce Capstone Project">
+        <meta name="author" content="Karen Marie E. Igcasan">
+        <link rel="stylesheet" href="<?=base_url("assets/style/login-register-style.css")?>"/>
+    </head>
+    <body>
+
+        <div class="error"></div>
+
+		<?= var_dump($this->session->flashdata('input_errors')) ?>;
+        <form action="/users/register" method="POST">
+			<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+            <h1>Register</h1>
+
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" />
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" />
+
+            <label for="email">Email address:</label>
+            <input type="text" name="email">
+
+            <label for="password">Password:</label>
+            <input type="password" name="password">
+
+            <label for="confirm_password">Repeat Password:</label>
+            <input type="password" name="confirm_password"><br>
+                        
+            <input type="submit" value="Register">
+            <a href="/login_page">Already have an account? Log in</a>
+        </form>
+
+        
+    </body>
 </html>
