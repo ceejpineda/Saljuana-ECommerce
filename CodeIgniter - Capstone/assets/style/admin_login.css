@@ -1,0 +1,86 @@
+body {
+  background-color: #871b1b;
+  font-family: sans-serif;
+}
+body .error {
+  width: 100%;
+  position: absolute;
+  top: 3em;
+}
+body .error p {
+  color: #ff5656;
+  font-size: 1em;
+  margin: 10px auto;
+  text-align: center;
+  width: 30%;
+}
+body form {
+  width: 25em;
+  height: fit-content;
+  background-color: #ffffff;
+  border-radius: 4vh;
+  margin: 10em auto 0 auto;
+  padding: 1.5em;
+  box-sizing: border-box;
+  box-shadow: 5px 5px 0 #5a5a5a;
+}
+body form div {
+  font-size: 0;
+  border-bottom: 2px solid #181818;
+  padding: 4% 4% 2% 4%;
+  margin-bottom: 5%;
+}
+body form i {
+  color: #1d1d1d;
+  height: 8%;
+  width: 6%;
+  margin-right: 5%;
+  font-size: 1.2rem;
+}
+body form input {
+  color: black;
+  height: 10%;
+  width: 80%;
+  border: 0;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0);
+  font-size: 1.2rem;
+}
+body form input:focus {
+  outline: 0;
+}
+body form input::placeholder {
+  color: #c1c1c1;
+}
+body form input[type="submit"] {
+  font-size: 20px;
+  width: 100%;
+}
+body form .slick {
+  font-weight: 100;
+  font-size: 2em;
+  text-decoration: none;
+  color: #424242;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  text-align: center;
+}
+body form .slick .tech {
+  font-weight: 900;
+}
+@media only screen and (max-width: 1023px) {
+  body input::placeholder {
+    font-size: 0.9em;
+  }
+  body .error p {
+    width: 60%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  body .error p {
+    width: 90%;
+  }
+  body form {
+    width: 20em;
+  }
+}
