@@ -10,6 +10,8 @@
     <body>
         <div class="error"></div>
 <?= var_dump($this->session->flashdata('input_errors')) ?>
+<?= var_dump($this->input->post()) ?>
+
         <form action="users/login" method="POST">  
 			<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
             <h1>Login</h1>

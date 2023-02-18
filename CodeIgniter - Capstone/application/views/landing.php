@@ -8,7 +8,15 @@
         <title>Landing Page</title>
     </head>
     <body>
-        <a href="/login_admin">Login Admin</a>
-        <a href="/login_page">Register</a>
+        <a href="/login_page">Login Admin</a>
+        <form action="/login_page" method="POST">
+		<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+        <input type="text" name="url[]">
+        <input type="text" name="url[]">
+        <input type="text" name="url[]">
+        <input type="text" name="url[]">
+        <input type="submit" value="fghd">
+        </form>
+        <a href="/register_page">Register</a>
     </body>
 </html>

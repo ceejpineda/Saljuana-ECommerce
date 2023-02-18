@@ -34,7 +34,7 @@ class Users extends CI_Controller
                         'first_name'=>$user['first_name'],
                         'is_admin'=>$user['is_admin'])
                     );            
-                redirect("dashboard");
+                redirect("dashboard/orders");
             }
             else 
             {
@@ -61,6 +61,12 @@ class Users extends CI_Controller
             $this->session->set_flashdata('success_message', 'SUCCESSFULLY REGISTERED!');
             redirect("login_page");
         }
+    }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect('/');
     }
 
 }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller 
+class Orders extends CI_Controller 
 {
     public function index()
     {
@@ -14,4 +14,11 @@ class Dashboard extends CI_Controller
             $this->load->view('dashboard/orders');
         }
     }
+
+    public function products()
+    {
+        
+    }
+
+
 }

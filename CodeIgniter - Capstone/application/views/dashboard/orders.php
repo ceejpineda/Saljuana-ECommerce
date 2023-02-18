@@ -12,7 +12,7 @@
             <h2>Dashboard</h2>
             <a href="./dashboard_orders.html">Orders</a>
             <a href="./dashboard_products.html">Products</a>
-            <a href="./login.html">Logoff</a>
+            <a href="/users/logout">Logoff</a>
         </header>  
         <nav>
             <div>
