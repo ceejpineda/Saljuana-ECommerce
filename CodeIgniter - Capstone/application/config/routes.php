@@ -10,6 +10,9 @@ $route['login_page'] = 'landing/login_page';
 $route['login_admin'] = 'landing/login_admin';
 $route['register_page'] = 'landing/register_page';
 
+$route['products/show/(:any)'] = 'products/show/index/$1';
+
+
 ?>
 
 

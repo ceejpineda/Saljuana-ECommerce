@@ -15,10 +15,5 @@ class Orders extends CI_Controller
         }
     }
 
-    public function products()
-    {
-        
-    }
-
 
 }

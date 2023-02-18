@@ -17,7 +17,7 @@ class Users extends CI_Controller
         $result = $this->User->validate_signin_form($post_data);
         if($result != 'success') {
             $this->session->set_flashdata('input_errors', $result);
-            redirect("login");
+            redirect("login_page");
         } 
         else 
         {
