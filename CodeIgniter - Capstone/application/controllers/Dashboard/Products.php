@@ -24,7 +24,7 @@ class Products extends CI_Controller
 
     public function process_add() {
         $post = $this->input->post(NULL, TRUE);
-        //var_dump($post);
+        var_dump($post);
 
         if (!empty($_FILES['product_img_file']['name'][0])) {
             // Files were uploaded, so process them
@@ -45,6 +45,7 @@ class Products extends CI_Controller
                 mkdir($upload_path, 0777, true);
             }else{
                 echo "Duplicate Item";
+                return;
             }
         
             $this->load->library('upload', $config);
@@ -56,7 +57,18 @@ class Products extends CI_Controller
                 $_FILES['file']['tmp_name'] = $_FILES['product_img_file']['tmp_name'][$i];
                 $_FILES['file']['error'] = $_FILES['product_img_file']['error'][$i];
                 $_FILES['file']['size'] = $_FILES['product_img_file']['size'][$i];
+                if ($this->input->post('main_image') == $i) {
+                    // This file is selected as the main image
+                    $new_file_name = '0.jpg';
+                    $main_image_index = $file_counter;
+                } else {
+                    // This file is not selected as the main image
+                    $new_file_name = $file_counter . '.' . pathinfo($_FILES['product_img_file']['name'][$i], PATHINFO_EXTENSION);
+                }
         
+                // Upload the file
+                $this->upload->initialize($config);
+                $this->upload->file_name_override = $new_file_name;
                 if (!$this->upload->do_upload('file')) {
                     // File upload failed
                     $error = $this->upload->display_errors();

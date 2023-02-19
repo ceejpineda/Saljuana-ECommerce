@@ -9,26 +9,22 @@
     <script src="<?= base_url('assets/js/categories.js') ?>"></script>
 </head>
 <body>
-<?php $this->load->view('partials/nav') ?>
-    <main>
-        <aside class="category_panel">
+<?php $this->load->view('partials/nav-user') ?>
+    <main class="w-90 d-flex justify-content-between">
+    <div class="row">
+        <aside class="category_panel col-sm-2">
             <form action="/products/categories/filter" method="post" id="search">
                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
-                <input type="search" name="product_name" placeholder="Product name" />
-                <button type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 17 17">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </button>
+                <input class="form-control" type="search" name="product_name" placeholder="Product name" />
             </form>
             <section class="products_categories">
                 <h4>Categories</h4>
 <?php
 foreach($categories as $category){
 ?>
-            <div>
+            <div class="d-flex category_item align-items-center">
+                <input class="form-check-input" type="checkbox" name="categories[]" form="search" value="<?=$category['id']?>">
                 <label for="search_checkbox"><?=$category['category_name']?> (<?=$category['count']?>)</label>
-                <input type="checkbox" name="categories[]" form="search" value="<?=$category['id']?>">
             </div>
 
 <?php
@@ -37,7 +33,7 @@ foreach($categories as $category){
                 <a class="show_all_products" href="">All Products</a>
             </section>
         </aside>
-        <article class="catalog">
+        <article class="catalog col-sm-10">
             <div class="subheader">
                 <h2><span class="category_name">T-shirts</span> (page <span class="page_number">1</span>)</h2>
                 <section class="pagination_top">
@@ -55,16 +51,25 @@ foreach($categories as $category){
                     <option value="2">Most Popular</option>
                 </select>
             </form>
-            <div class="products_container">
+            <div class="d-flex row justify-content-center">
 <?php
 foreach($products as $product){
 ?>
-                <section class="products">
+                <section class="products col-sm-2 d-flex flex-column justify-content-between align-items-center">
                     <figure class="item">
                         <a href="/products/show/<?=$product['id']?>"><img src="<?=base_url($product['url'])?>" alt="T-shirt"/></a>
-                        <h4><?=$product['price']?></h4>
                     </figure>
-                    <p><?=$product['product_name']?></p>
+                    <div class="d-flex flex-column info_container">
+                        <div class="name_container d-flex flex-column justify-content-between">
+                            <p><?=$product['product_name']?></p>
+                        </div>
+                        <h3><?=$product['price']?></h3>
+                        <div class="d-flex">
+                            <form action="" method="post">
+                                <input class="btn btn-primary" type="submit" value="buy">
+                            </form>
+                        </div>
+                    </div>
                 </section>
 <?php
 }
@@ -84,6 +89,7 @@ foreach($products as $product){
              --><a class="next_page" href="">&rsaquo;</a>
             </section>
         </article>
+    </div>
     </main>
 </body>
 </html>

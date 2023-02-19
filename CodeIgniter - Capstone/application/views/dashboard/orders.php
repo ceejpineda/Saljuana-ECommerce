@@ -47,12 +47,8 @@
     </script>
 </head>
 <body>
-    <header class="header_admin">
-        <a href="/dashboard/orders"><h2>Dashboard</h2></a>
-        <a href="/dashboard/orders"><h3>Orders</h3></a>
-        <a href="/dashboard/products"><h3>Products</h3></a>
-        <a class="nav_end" href="../login_register/login_page.html"><h3>Log off</h3></a>
-    </header>
+<?php $this->load->view('partials/nav-admin') ?>
+
     <main>
         <p class="message_admin_orders"></p>
         <form class="form_admin_orders" action="" method="post">

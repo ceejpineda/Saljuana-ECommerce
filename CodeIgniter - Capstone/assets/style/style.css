@@ -1,11 +1,17 @@
-/*------------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Mandali&family=Poppins&family=Varela+Round&display=swap');
+:root {
+    --primary: #F37B37;
+    --secondary: #1F2032;
+    --accent: #FFCF67
+}
+/*-----------------------------------------------------------------*/
 /*  Stylesheet common for all pages    */
 /*------------------------------------------------------------------*/
 body{
     padding: 0;
     margin: 0;
     position: relative;
-    font-family: Arial, Helvetica, sans-serif;
+    
     background-color: rgb(240, 240, 240);
 }
 h1{
@@ -45,28 +51,8 @@ header{
         right: 3%;
         top: 17px;
     }
-main{
-    padding: 2% 3% 4% 3%;
-    text-align: center;
-}
-table{
-    border-collapse: collapse;
-    width: 100%;
-    background-color: white;
-}
-th, td{
-    border-right: 1px solid #a3a3a3;
-    border-left: 1px solid #a3a3a3;
-    padding: 4px;
-}
-thead{
-    background-color: rgb(96, 96, 96);
-    color: white;
-    border-top: 1px solid #a3a3a3;
-}
-tbody{
-    border-bottom: 1px solid #a3a3a3;
-    text-align: left;
+nav{
+    margin-bottom: 30px;
 }
 img{
     object-fit: contain;
@@ -78,9 +64,6 @@ figure{
 }
 button{
     vertical-align: middle;
-}
-input, select{
-    height: 24px;
 }
 input[type=submit]{
     height: 24.5px;
@@ -120,11 +103,11 @@ a{
 /*  Admin Orders Dashboard Table / Admin Products Dashboard Table Section   */
 /*------------------------------------------------------------------*/
 .admin_orders_table, .admin_products_table{
-    margin: 20px;
-    width: calc(100% - 40px);
+    margin-top: 40px;
+    width: calc(100%);
 }
 .admin_orders_table td:nth-child(6), .admin_products_table td:nth-child(6){
-    width: 150px;
+    width: 250px;
     text-align: center;
 }
 
@@ -139,18 +122,20 @@ a{
 /*------------------------------------------------------------------*/
 /*  Category Section   */
 /*------------------------------------------------------------------*/
+.products_categories{
+    padding: 15px;
+}
+.products_categories label{
+    margin-left: 10px;
+    font-size: 16px;
+}
 .category_panel{
-    display: inline-block;
-    margin: 0 10px 20px 0 ;
-    outline: 1px solid #a3a3a3;
+    text-align: center;
 }
     .category_panel form{
         padding: 14.5px;
         background-color: white;
     }
-        .category_panel form input[type=search]{
-            width: 150px;
-        }
         .category_panel form button{
             height: 24px;
         }
@@ -182,10 +167,9 @@ a{
 /*------------------------------------------------------------------*/
 .catalog{
     text-align: center;
-    display: inline-block;
-    width: calc(100% - 227px - 4*2px);
+    /* display: inline-block; */
     vertical-align: top;
-    border: 1px solid #a3a3a3;
+    /* border: 1px solid #a3a3a3; */
     background-color: white;
 }
     .catalog .subheader{
@@ -229,34 +213,29 @@ a{
 /*------------------------------------------------------------------*/
 .products{
     width: 250px;
-    display: inline-block;
-    margin: 3px 10px;
+    height: 300px;
+    margin: 10px 10px;
+    border: 1px solid var(--secondary);
+    background-color: #f2f2f2;
     vertical-align: top;
 }
     .products p{
         padding: 5px 0 20px 0;
-        text-align: left;
+        text-align: center;
+    }
+    .products img{
+        height: 150px;
+        mix-blend-mode: multiply;
     }
 figure.item{
-    width: 250px;
-    height: 250px;
+    height: 200px;
     position: relative;
-    background-color: white;
-    border: 1px solid black;
+    object-fit: contain;
 }
-    figure.item:hover{
-        outline: 1px solid rgba(8, 0, 167, 0.7);
-    }
-    figure.item h4{
-        text-align: right;
-        padding: 3px 7px;
-        background-color: rgba(8, 0, 167, 0.7);
-        color: white;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: calc(100% - 14px);
-        font-weight: normal;
+    .products:hover{
+        border: 1px solid var(--accent);
+        outline: 1px solid var(--accent);
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--accent);
     }
 
 /*------------------------------------------------------------------*/
@@ -700,7 +679,7 @@ figure.item{
         color: white;
     }
 .admin_products_table td:nth-child(4), .admin_products_table td:nth-child(5){
-    text-align: right;
+    text-align: middle;
 }
 
 /*------------------------------------------------------------------*/
@@ -815,26 +794,23 @@ dialog .btn_close{
     .select_tag_container{
         position: relative;
         display: inline-block;
-        margin: 0px 15px 5px 5px;
+        margin: 0px 15px 5px 0px;
     }
     .admin_products_add_edit .dummy_select_tag{
-        width: 428px;
-        height: 25px;
         position: relative;
         text-align: left;
         background-color: white;
-        border: 0.3px solid rgb(118, 118, 118);
-        padding: 1px 5px;
-        border-radius: 2px;
+        border: none;
+        outline: none;
     }
         .dummy_select_tag span:last-child{
             position: absolute; /* in relation to .dummy_select_tag */
-            right: -1px;
-            top: 0;
+            right: 7px;
+            top: 7px; 
             padding: 2px;
             width: 24px;
-            /* border: 1px solid black; */
-            /* background-color: rgb(235, 235, 235); */
+            border: none;
+            background-color: none;
             text-align: center;
         }
         .select_tag_container ul{
@@ -851,14 +827,12 @@ dialog .btn_close{
         outline: 1px solid black;
     }
         .product_category_edit_delete_section{
-            position: relative;
+            height: 60px;
+            border-bottom: 1px solid black;
             padding: 2px 0;
         }
             .product_category_btn{
-                display: inline-block;
-                vertical-align: middle;
-                height: 24px;
-                visibility: hidden;
+                /* visibility: hidden; */
             }
                 .form_product_category_edit{
                     display: inline;
@@ -867,7 +841,7 @@ dialog .btn_close{
                         height: 24px;
                         border: none;
                         /* width: 328px; */
-                        width: 300px;
+                        width: 200px;
                         padding: 1px 10px;
                     }
                 .btn_product_category_edit, .btn_product_category_delete{
@@ -875,6 +849,7 @@ dialog .btn_close{
                     padding: 4px 9px;
                     color: white;
                     background-color: #1975ff;
+                    z-index: 99;
                 }
                     .btn_product_category_edit:hover, .btn_product_category_delete:hover{
                         cursor: pointer;
@@ -886,9 +861,11 @@ dialog .btn_close{
     height: 100%;
     display: inline-block;
     visibility: hidden;
+    width:20px;
 }
     .waiting_icon img{
         height: 100%;
+        width:20px;
     }
 
 /*------------------------------------------------------------------*/
@@ -941,6 +918,7 @@ input[type=file]{
     margin: 10px 16px 0 10px;
 }
 .file_upload_label{
+    display: block;
     border: 0.5px solid rgb(118, 118, 118);
     padding: 4px 6px;
     cursor: pointer;
@@ -949,16 +927,16 @@ input[type=file]{
 }
 .img_upload_container{
     padding: 0;
-    margin-left: 180px;
     width: fit-content;
+    text-align: center;
 }
 .img_upload_section{
-    width: 363px;
+    /* width: 363px; */
     padding: 5px 20px;
     background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list hamburger_icon" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>');
     background-repeat: no-repeat;
     background-position: 10px 22px;
-    padding-left: 45px;
+    padding-left: 50px;
     list-style-type: none;
 }   
     .img_upload_section .hamburger_icon, .img_upload_section figure, .img_upload_section p.img_filename, .img_upload_section .btn_img_upload_delete, .img_upload_section input[type=checkbox]{
@@ -1020,6 +998,108 @@ input[type=file]{
 /*  END OF Admin Products Dashboard Page   */
 /*------------------------------------------------------------------*/
 
+*{
+    font-family: 'Poppins', sans-serif;
+}
 input[type=checkbox]{
     display: block;
+}
+#nav{
+    font-family: 'Poppins', sans-serif;
+    background-color: #F37B37;
+}
+table{
+    font-family: 'Poppins', sans-serif;
+}
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: #fbfbfb;
+    vertical-align: middle;
+ }
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+    background-color: #e3e3e3;
+    vertical-align: middle;
+}
+thead{
+    background-color: var(--secondary);
+    color: #f2f2f2;
+}
+.outline{
+    outline: 1px solid red;
+}
+.btn-primary{
+    background-color: var(--primary);
+    border: none;
+}
+.btn-primary:hover, .btn-secondary:hover{
+    background-color: var(--accent);
+}
+.btn-outline-primary{
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+.btn-outline-primary:hover{
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+}
+.btn-secondary{
+    background-color: var(--secondary);
+    border: none;
+}
+a.logoff{
+    color: #f2f2f2;
+}
+a.logoff:hover{
+    color: red;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+input[type="checkbox"]:focus,
+.uneditable-input:focus {   
+    border-color: var(--accent);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--accent);
+    outline: 0 none;
+}
+input[type="checkbox"]:checked{
+    background-color: var(--accent);
+}
+.form-check-input:checked{
+    border-color: var(--accent);
+    outline: none;
+}
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+.category_item{
+    margin: 5px 0px;
+}
+main{
+    text-align: center;
+    padding: 0px 100px;
+}
+
+.info_container{
+    width: 250px;
+}
+
+.name_container{
+    height: 50px;
+    width: 260px;
+    background-color: var(--secondary);
+    color:#f2f2f2;
 }
