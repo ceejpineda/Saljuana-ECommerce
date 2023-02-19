@@ -60,8 +60,16 @@
 
             /*  For submission of forms    */
             $(document).on("submit", "form", function(){
-                return false;
                 pageNumHighlight(pageNum);
+                var form = $(this);
+                $.post(form.attr('action'),form.serialize(), function(res){
+                    $('.products_container').html(res);
+                });
+                return false;
             });
             /**********************************************/
+
+            $(document).on("change keyup", "input", function(){
+                $("#search").submit();
+            })
         });

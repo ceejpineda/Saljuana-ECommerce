@@ -231,7 +231,7 @@ a{
     width: 250px;
     display: inline-block;
     margin: 3px 10px;
-    
+    vertical-align: top;
 }
     .products p{
         padding: 5px 0 20px 0;
@@ -1019,3 +1019,7 @@ input[type=file]{
 /*------------------------------------------------------------------*/
 /*  END OF Admin Products Dashboard Page   */
 /*------------------------------------------------------------------*/
+
+input[type=checkbox]{
+    display: block;
+}

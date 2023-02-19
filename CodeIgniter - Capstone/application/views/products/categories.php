@@ -10,10 +10,10 @@
 </head>
 <body>
 <?php $this->load->view('partials/nav') ?>
-<?= var_dump($products) ?>
     <main>
         <aside class="category_panel">
-            <form action="" method="post">
+            <form action="/products/categories/filter" method="post" id="search">
+                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                 <input type="search" name="product_name" placeholder="Product name" />
                 <button type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 17 17">
@@ -23,9 +23,17 @@
             </form>
             <section class="products_categories">
                 <h4>Categories</h4>
-                <a href="">T-shirts(30)</a>
-                <a href="">Shoes(30)</a>
-                <a href="">Shorts(30)</a>
+<?php
+foreach($categories as $category){
+?>
+            <div>
+                <label for="search_checkbox"><?=$category['category_name']?> (<?=$category['count']?>)</label>
+                <input type="checkbox" name="categories[]" form="search" value="<?=$category['id']?>">
+            </div>
+
+<?php
+}
+?>
                 <a class="show_all_products" href="">All Products</a>
             </section>
         </aside>
@@ -54,9 +62,9 @@ foreach($products as $product){
                 <section class="products">
                     <figure class="item">
                         <a href="/products/show/<?=$product['id']?>"><img src="<?=base_url($product['url'])?>" alt="T-shirt"/></a>
-                        <h4>$19.99</h4>
+                        <h4><?=$product['price']?></h4>
                     </figure>
-                    <p>T-shirt</p>
+                    <p><?=$product['product_name']?></p>
                 </section>
 <?php
 }

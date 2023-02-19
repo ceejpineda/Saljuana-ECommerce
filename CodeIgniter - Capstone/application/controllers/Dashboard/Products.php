@@ -16,52 +16,68 @@ class Products extends CI_Controller
         }
         else
         {
-            $this->load->view('dashboard/products');
+            $products = $this->Product->load_all_products_admin();
+            $data['products'] = $products;
+            $this->load->view('dashboard/products', $data);
         }
     }
 
     public function process_add() {
-        // Load the file uploading library
+        $post = $this->input->post(NULL, TRUE);
+        //var_dump($post);
+
         if (!empty($_FILES['product_img_file']['name'][0])) {
-            $files = $_FILES['product_img_file'];
-            $errors = array();
-            $success = array();
-        
-            $config['upload_path'] = FCPATH . 'assets/uploads/';
+            // Files were uploaded, so process them
+
+            $folder_name = $post['product_name'];
+
+            //FCPATH is the root of CodeIgniter
+            $upload_path = FCPATH . 'assets/uploads/' . $folder_name . '/';
+            $config['upload_path'] = $upload_path;
             $config['allowed_types'] = 'png|jpg|jpeg';
             $config['max_size'] = '2048'; // 2MB
             $config['encrypt_name'] = TRUE;
+            $config['remove_spaces'] = TRUE;
+        
+            /* Create directory if it does not exist
+                If it is already created, meaning there is a Duplicate Named Product*/
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
+            }else{
+                echo "Duplicate Item";
+            }
         
             $this->load->library('upload', $config);
         
-            foreach ($files['name'] as $key => $value) {
-                $_FILES['product_img_file[]']['name'] = $files['name'][$key];
-                $_FILES['product_img_file[]']['type'] = $files['type'][$key];
-                $_FILES['product_img_file[]']['tmp_name'] = $files['tmp_name'][$key];
-                $_FILES['product_img_file[]']['error'] = $files['error'][$key];
-                $_FILES['product_img_file[]']['size'] = $files['size'][$key];
+            $files_data = array();
+            for ($i = 0; $i < count($_FILES['product_img_file']['name']); $i++) {
+                $_FILES['file']['name'] = $_FILES['product_img_file']['name'][$i];
+                $_FILES['file']['type'] = $_FILES['product_img_file']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['product_img_file']['tmp_name'][$i];
+                $_FILES['file']['error'] = $_FILES['product_img_file']['error'][$i];
+                $_FILES['file']['size'] = $_FILES['product_img_file']['size'][$i];
         
-                if (!$this->upload->do_upload('product_img_file[]')) {
+                if (!$this->upload->do_upload('file')) {
                     // File upload failed
-                    $errors[] = $this->upload->display_errors();
+                    $error = $this->upload->display_errors();
+                    echo $error;
                 } else {
                     // File upload succeeded, get the file path
                     $file_data = $this->upload->data();
-                    $file_path = 'assets/uploads/' . $file_data['file_name'];
-                    // do something with $file_path
-                    $success[] = $file_path;
+                    $file_path = 'assets/uploads/' . $folder_name . '/';
+                    $files_data[] = $file_path;
                 }
             }
-        
-            if (!empty($errors)) {
-                echo implode("<br>", $errors);
-            } else {
-                echo "Files uploaded successfully!";
-                print_r($success);
-            }
+            
+            /* When files are successfully uploaded the directory and details of the product
+                Would be saved in the Database. (Lessens the error checking and querying in database)*/
+            $post['dir'] = $file_path;
+            $this->Product->add_product($post);
+            redirect('dashboard/products');
+            
         } else {
             // No files were uploaded
-            echo "You did not select a file to upload.";
+            echo "You did not select any files to upload.";
         }
       }
 

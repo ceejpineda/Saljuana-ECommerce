@@ -43,39 +43,23 @@
                 </tr>
             </thead>
             <tbody>
+<?php
+foreach($products as $product){
+?>
                 <tr class="color0 product_id_1">
-                    <td><img src="../../../application/views/assets/img/products/0/products.jpg" alt="t-shirt"></td>
-                    <td class="product_id">1</td>
-                    <td>Shirt</td>
-                    <td>123</td>
-                    <td>1000</td>
+                    <td><img src="<?=base_url($product['img_url'])?>/0.jpg" alt="t-shirt"></td>
+                    <td class="product_id"><?=$product['id']?></td>
+                    <td><?=$product['product_name']?></td>
+                    <td><?=$product['inventory_count']?></td>
+                    <td><?=$product['qty_sold']?></td>
                     <td>
                         <a href=""><p class="product_edit_link">edit</p></a>
                         <a href=""><p class="product_delete_link">delete</p></a>
                     </td>
                 </tr>
-                <tr class="color1 product_id_2">
-                    <td><img src="../../../application/views/assets/img/products/0/products.jpg" alt="t-shirt"></td>
-                    <td class="product_id">2</td>
-                    <td>Hat</td>
-                    <td>456</td>
-                    <td>1000</td>
-                    <td>
-                        <a href=""><p class="product_edit_link">edit</p></a>
-                        <a href=""><p class="product_delete_link">delete</p></a>
-                    </td>
-                </tr>
-                <tr class="color0 product_id_3">
-                    <td><img src="../../../application/views/assets/img/products/0/products.jpg" alt="t-shirt"></td>
-                    <td class="product_id">3</td>
-                    <td>Mug</td>
-                    <td>789</td>
-                    <td>1000</td>
-                    <td>
-                        <a href=""><p class="product_edit_link">edit</p></a>
-                        <a href=""><p class="product_delete_link">delete</p></a>
-                    </td>
-                </tr>
+<?php
+}
+?>
             </tbody>
         </table>
         <section class="pagination">
@@ -114,6 +98,7 @@
         </button>
         <form class="form_product_add_edit" action="/dashboard/products/process_add" method="post" enctype="multipart/form-data">
             <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+            <input class="product_category_id" type="hidden" name="category_id" value= '0' id="product_category_id" />
             <p>Name: </p><input class="input_product_name" type="text" name="product_name"/>
             <p>Description: </p><textarea class="input_product_desc" name="product_desc"></textarea>
             <p>Categories: </p>
@@ -149,6 +134,5 @@
             </div>
         </div>
     </dialog>
-    <?= var_dump($this->session->flashdata('post')) ?>
 </body>
 </html>
