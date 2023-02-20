@@ -61,7 +61,6 @@ class Products extends CI_Controller
                     // This file is not selected as the main image
                     $new_file_name = 'sub' . $i . '.' . pathinfo($_FILES['product_img_file']['name'][$i], PATHINFO_EXTENSION);
                 }
-                var_dump($_FILES);
         
                 // Upload the file
                 $config['file_name'] = $new_file_name;
@@ -82,8 +81,7 @@ class Products extends CI_Controller
                 Would be saved in the Database. (Lessens the error checking and querying in database)*/
             $post['dir'] = $file_path;
             $this->Product->add_product($post);
-            //redirect('dashboard/products');
-            
+            redirect('dashboard/products');
         } else {
             // No files were uploaded
             echo "You did not select any files to upload.";

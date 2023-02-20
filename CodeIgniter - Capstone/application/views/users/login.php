@@ -6,14 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login Page</title>
     <?php $this->load->view('partials/header') ?>
-   <script>
-        $(document).ready(function(){
-            $(document).on("submit", "form", function(){
-                window.location = "../../../application/views/admin/admin_orders_dashboard_page.html";
-                return false;
-            });
-        });
-    </script>
 </head>
 <body>
     <header>

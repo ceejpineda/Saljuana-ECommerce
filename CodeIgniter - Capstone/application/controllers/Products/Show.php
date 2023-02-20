@@ -19,6 +19,8 @@ class Show extends CI_Controller
         {
             $product = $this->Product->load_product_info($id);
             $directory = $product['img_url'];
+            $similar = $this->Product->load_similar($product['category_id']);
+            $similar = array_slice($similar, 0, 6);
 
             $product_url = array();
 
@@ -34,6 +36,7 @@ class Show extends CI_Controller
                 $product_url[]= $directory . '/' . $url;
             }
             $product['urls'] = $product_url;
+            $product['similar'] = $similar;
             $this->load->view('products/show', $product);
         }
     }

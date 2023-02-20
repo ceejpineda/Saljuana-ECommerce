@@ -63,6 +63,7 @@
                 pageNumHighlight(pageNum);
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(), function(res){
+                    $(".category_name").text($(".category_list").val());
                     $('.products_container').html(res);
                 });
                 return false;

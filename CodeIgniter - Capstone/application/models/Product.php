@@ -5,7 +5,7 @@ class Product extends CI_Model
 {
     function load_all_products()
     {
-        $query = "SELECT products.id, category_name, product_name ,img_url, price, description 
+        $query = "SELECT products.id, category_name, product_name ,img_url, price, description, category_id 
                     FROM products
                     JOIN categories 
                     ON categories.id = products.category_id;";
@@ -55,6 +55,13 @@ class Product extends CI_Model
         }
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    function load_similar($id)
+    {
+        $query = "SELECT * FROM products WHERE category_id = ? ORDER BY id DESC";
+        $value = array($id);
+        return $this->db->query($query, $value)->result_array();
     }
 
 }

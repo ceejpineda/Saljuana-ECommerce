@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(Products Page) Tshirts (page 1) | Lashopda</title>
+    <title>Saljuana | Products</title>
 <?php $this->load->view('partials/header') ?>
     <script src="<?= base_url('assets/js/categories.js') ?>"></script>
 </head>
@@ -23,8 +23,9 @@
 foreach($categories as $category){
 ?>
             <div class="d-flex category_item align-items-center">
+                <!-- <input type="hidden" name="category_list" id="category_list" value="<?=$names?>"> -->
                 <input class="form-check-input" type="checkbox" name="categories[]" form="search" value="<?=$category['id']?>">
-                <label for="search_checkbox"><?=$category['category_name']?> (<?=$category['count']?>)</label>
+                <label for="search_checkbox"><span class=""><?=$category['category_name']?></span> (<?=$category['count']?>)</label>
             </div>
 
 <?php
@@ -35,7 +36,7 @@ foreach($categories as $category){
         </aside>
         <article class="catalog col-sm-10">
             <div class="subheader">
-                <h2><span class="category_name">T-shirts</span> (page <span class="page_number">1</span>)</h2>
+                <h2><span class="category_name"></span> (page <span class="page_number">1</span>)</h2>
                 <section class="pagination_top">
                     <a class="first_page" href="">first</a><!--
                 ---><a class="prev_page" href="">prev</a><!--
@@ -56,11 +57,11 @@ foreach($categories as $category){
 foreach($products as $product){
 ?>
                 <section class="products col-sm-2 d-flex flex-column justify-content-between align-items-center h-100">
-                    <figure class="item">
+                    <figure class="item d-flex align-items-center">
                         <a href="/products/show/<?=$product['id']?>"><img src="<?=base_url($product['url'])?>" alt="T-shirt"/></a>
                     </figure>
                     <div class="d-flex flex-column info_container">
-                        <div class="name_container d-flex flex-column justify-content-between">
+                        <div class="name_container d-flex flex-column align-items-center justify-content-between">
                             <p><?=$product['product_name']?></p>
                         </div>
                         <h3><?=$product['price']?></h3>
