@@ -24,7 +24,6 @@ class Products extends CI_Controller
 
     public function process_add() {
         $post = $this->input->post(NULL, TRUE);
-        var_dump($post);
 
         if (!empty($_FILES['product_img_file']['name'][0])) {
             // Files were uploaded, so process them
@@ -36,9 +35,8 @@ class Products extends CI_Controller
             $config['upload_path'] = $upload_path;
             $config['allowed_types'] = 'png|jpg|jpeg';
             $config['max_size'] = '2048'; // 2MB
-            $config['encrypt_name'] = TRUE;
             $config['remove_spaces'] = TRUE;
-        
+            $this->load->library('upload', $config);
             /* Create directory if it does not exist
                 If it is already created, meaning there is a Duplicate Named Product*/
             if (!is_dir($upload_path)) {
@@ -48,27 +46,26 @@ class Products extends CI_Controller
                 return;
             }
         
-            $this->load->library('upload', $config);
-        
             $files_data = array();
             for ($i = 0; $i < count($_FILES['product_img_file']['name']); $i++) {
-                $_FILES['file']['name'] = $_FILES['product_img_file']['name'][$i];
+                $_FILES['file']['name'] = $i.'.jpg';
                 $_FILES['file']['type'] = $_FILES['product_img_file']['type'][$i];
                 $_FILES['file']['tmp_name'] = $_FILES['product_img_file']['tmp_name'][$i];
                 $_FILES['file']['error'] = $_FILES['product_img_file']['error'][$i];
                 $_FILES['file']['size'] = $_FILES['product_img_file']['size'][$i];
                 if ($this->input->post('main_image') == $i) {
                     // This file is selected as the main image
-                    $new_file_name = '0.jpg';
-                    $main_image_index = $file_counter;
+                    $new_file_name = 'main.jpg';
+                    $main_image_index = $i;
                 } else {
                     // This file is not selected as the main image
-                    $new_file_name = $file_counter . '.' . pathinfo($_FILES['product_img_file']['name'][$i], PATHINFO_EXTENSION);
+                    $new_file_name = 'sub' . $i . '.' . pathinfo($_FILES['product_img_file']['name'][$i], PATHINFO_EXTENSION);
                 }
+                var_dump($_FILES);
         
                 // Upload the file
+                $config['file_name'] = $new_file_name;
                 $this->upload->initialize($config);
-                $this->upload->file_name_override = $new_file_name;
                 if (!$this->upload->do_upload('file')) {
                     // File upload failed
                     $error = $this->upload->display_errors();
@@ -85,7 +82,7 @@ class Products extends CI_Controller
                 Would be saved in the Database. (Lessens the error checking and querying in database)*/
             $post['dir'] = $file_path;
             $this->Product->add_product($post);
-            redirect('dashboard/products');
+            //redirect('dashboard/products');
             
         } else {
             // No files were uploaded

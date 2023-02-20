@@ -1092,14 +1092,12 @@ main{
     text-align: center;
     padding: 0px 100px;
 }
-
-.info_container{
-    width: 250px;
-}
-
 .name_container{
     height: 50px;
     width: 260px;
     background-color: var(--secondary);
     color:#f2f2f2;
+}
+.quick_buy{
+    height: 35px;
 }

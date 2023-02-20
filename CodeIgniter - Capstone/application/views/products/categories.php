@@ -51,11 +51,11 @@ foreach($categories as $category){
                     <option value="2">Most Popular</option>
                 </select>
             </form>
-            <div class="d-flex row justify-content-center">
+            <div class="d-flex row justify-content-center products_container">
 <?php
 foreach($products as $product){
 ?>
-                <section class="products col-sm-2 d-flex flex-column justify-content-between align-items-center">
+                <section class="products col-sm-2 d-flex flex-column justify-content-between align-items-center h-100">
                     <figure class="item">
                         <a href="/products/show/<?=$product['id']?>"><img src="<?=base_url($product['url'])?>" alt="T-shirt"/></a>
                     </figure>
@@ -64,12 +64,10 @@ foreach($products as $product){
                             <p><?=$product['product_name']?></p>
                         </div>
                         <h3><?=$product['price']?></h3>
-                        <div class="d-flex">
-                            <form action="" method="post">
-                                <input class="btn btn-primary" type="submit" value="buy">
-                            </form>
-                        </div>
                     </div>
+                    <form action="" method="post" class="d-flex quick_buy">
+                        <input class="btn btn-primary h-100" type="submit" value="Buy Now">
+                    </form>
                 </section>
 <?php
 }
