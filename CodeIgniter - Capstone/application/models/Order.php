@@ -3,6 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Order extends CI_Model 
 {
+    function get_all_orders()
+    {
+        $query = "SELECT orders.*, first_name, last_name FROM orders
+                    JOIN users ON orders.user_id = users.id";
+        return $this->db->query($query)->result_array();
+    }
+
     function place_order($post, $items)
     {
         $total_amount = 0;
