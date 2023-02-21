@@ -32,8 +32,13 @@ class Categories extends CI_Controller
                 $product['url'] = $directory . '/' . $file;
                 $products_info[] = $product;
             }
+            $data['count'] = count($products);
             $data['products'] = $products_info;
             $data['categories'] = $category_count;
+            $pages = ceil(count($products)/5);
+            $paged_products = array_slice($products_info, 0*5, 5); 
+            $data['products'] = $paged_products;
+            $data['pages'] = $pages;
             $this->load->view('products/categories', $data);
         }
     }
@@ -62,6 +67,11 @@ class Categories extends CI_Controller
             $products_info[] = $product;
         }
         $data['products'] = $products_info;
+        $pages = ceil(count($products)/5);
+		$page_number = $this->input->post('page')-1;
+		$paged_products = array_slice($products_info, $page_number*5, 5); 
+		$data['products'] = $paged_products;
+		$data['pages'] = $pages;
         $this->load->view('partials/categorized', $data);
     }
 

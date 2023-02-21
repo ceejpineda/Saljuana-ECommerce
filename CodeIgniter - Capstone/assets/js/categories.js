@@ -64,13 +64,22 @@
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(), function(res){
                     $(".category_name").text($(".category_list").val());
-                    $('.products_container').html(res);
+                    $('#paginated').html(res);
                 });
                 return false;
             });
             /**********************************************/
 
             $(document).on("change keyup", "input", function(){
+                $("#search").submit();
+            })
+
+            $('.submit_search').click(function(){
+                $('#page').val($(this).val());
+            })
+
+            $(document).on('click', '.submit_search', function(){
+                $('#page').val($(this).val());
                 $("#search").submit();
             })
         });

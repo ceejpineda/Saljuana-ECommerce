@@ -17,8 +17,26 @@ class Products extends CI_Controller
         else
         {
             $products = $this->Product->load_all_products_admin();
-            $data['products'] = $products;
+            $pages = ceil(count($products)/5);
+            $paged_products = array_slice($products, 0, 5);
+            $data['products'] = $paged_products;
+            $data['pages'] = $pages;
+            //$data['products'] = $products;
             $this->load->view('dashboard/products', $data);
+        }
+    }
+
+    public function index_html()
+    {
+        if($this->session->userdata('is_admin') != 1)
+        {
+            redirect('/');
+        }
+        else
+        {
+            $products = $this->Product->load_all_products_admin();
+            $data['products'] = $products;
+            $this->load->view('partials/admin_products', $data);
         }
     }
 
@@ -31,12 +49,18 @@ class Products extends CI_Controller
         foreach($products as $product)
         {
             $directory = $product['img_url'];
-            $url = scandir($directory);
+            if(isset($directory)) $url = scandir($directory);
             $file = $url[2];
             $product['url'] = $directory . '/' . $file;
             $products_info[] = $product;
         }
-        $data['products'] = $products_info;
+        //$data['products'] = $products_info;
+        $pages = ceil(count($products)/5);
+		$page_number = $this->input->post('page')-1;
+		$paged_products = array_slice($products_info, $page_number*5, 5); 
+		$data['products'] = $paged_products;
+		$data['pages'] = $pages;
+        //var_dump($data);
         $this->load->view('partials/admin_products', $data);
     }
 
@@ -99,17 +123,28 @@ class Products extends CI_Controller
                 Would be saved in the Database. (Lessens the error checking and querying in database)*/
             $post['dir'] = $file_path;
             $this->Product->add_product($post);
-            redirect('dashboard/products');
+            $products = $this->Product->load_all_products_admin();
+            $data['products'] = $products;
+            $this->index();
         } else {
             // No files were uploaded
             echo "You did not select any files to upload.";
         }
       }
 
-      public function edit_data($id)
-      {
+    public function delete($id)
+    {
+        $this->Product->delete_by_id($id);
+        $products = $this->Product->load_all_products_admin();
+        $data['products'] = $products;
+        $this->load->view('partials/admin_products', $data);
+
+    }
+
+    public function edit_data($id)
+    {
         echo json_encode($this->Product->get_edit_data($id));
-      }
+    }
 
 
 

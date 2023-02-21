@@ -1,3 +1,4 @@
+<div class="d-flex row justify-content-center products_container">
 <?php
 foreach($products as $product){
 ?>
@@ -18,3 +19,13 @@ foreach($products as $product){
 <?php
 }
 ?>
+            </div>
+            <section class="pagination">
+            <?php for($page = 1; $page<=$pages; $page++)
+{
+?>
+                <input type="submit" value="<?=$page?>" class="submit_search btn btn-secondary mx-2">
+<?php 
+}
+?>
+            </section>

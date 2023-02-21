@@ -1019,6 +1019,9 @@ input[type="checkbox"]:checked{
     border-color: var(--accent);
     outline: none;
 }
+.category_items{
+    font-size: 15px;
+}
 input[type=checkbox] {
     transform: scale(1.5);
 }

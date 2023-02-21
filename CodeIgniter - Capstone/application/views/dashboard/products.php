@@ -17,10 +17,12 @@
         <div class="d-flex justify-content-between">
             <form class="form_admin_products_search w-25" id="search_form" action="/dashboard/products/do_search" method="post">
                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                <input type="hidden" name="page" value="1" id="page">
                 <input class="form-control" type="search" id="admin_search" name="admin_search" placeholder="search">
             </form>
             <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add_modal">Add new product</button>
         </div>
+        <div id="partial">
         <table class="admin_products_table table table-striped table-hover">
             <thead>
                 <tr>
@@ -43,8 +45,11 @@ foreach($products as $product){
                     <td><?=$product['inventory_count']?></td>
                     <td><?=$product['qty_sold']?></td>
                     <td>
-                        <a class="btn btn-outline-primary edit_modal_button" data-bs-toggle="modal" data-bs-target="#edit_modal" href="/dashboard/products/edit_data/<?=$product['id']?>">Edit</a>
-                        <a class="btn btn-primary" href="">Delete</a>
+                        <form action="/dashboard/products/delete/<?=$product['id']?>" method="post" class="form_delete_product">
+                            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                            <a class="btn btn-outline-primary edit_modal_button" data-bs-toggle="modal" data-bs-target="#edit_modal" href="/dashboard/products/edit_data/<?=$product['id']?>">Edit</a>
+                            <input type="submit" class="btn btn-primary delete_product" value="Delete">
+                        </form>
                     </td>
                 </tr>
 <?php
@@ -52,19 +57,16 @@ foreach($products as $product){
 ?>
             </tbody>
         </table>
-        <!-- <section class="pagination">
-                <a href="">1</a><!--
-             --><a href="">2</a><!--
-             --><a href="">3</a><!--
-             --><a href="">4</a><!--
-             --><a href="">5</a><!--
-             --><a href="">6</a><!--
-             --><a href="">7</a><!--
-             --><a href="">8</a><!--
-             --><a href="">9</a><!--
-             --><a href="">10</a><!--
-             --><a class="next_page" href="">&rsaquo;</a>
-            </section> -->
+        <section class="pagination d-flex justify-content-center">
+<?php for($page = 1; $page<=$pages; $page++)
+{
+?>
+            <input type="submit" value="<?=$page?>" class="submit_search btn btn-secondary mx-2">
+<?php 
+}
+?>
+        </section>
+        </div>
     </main>
     <div class="admin_product_delete">
         <p>Are you sure you want to delete product "<span class="delete_product_name">Product Name</span>" (ID: <span class="delete_product_id">ID</span>)</p>

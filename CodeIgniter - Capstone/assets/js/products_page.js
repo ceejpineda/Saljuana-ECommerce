@@ -537,18 +537,30 @@
             previewWindow.document.write(previewWindowHTML);
         }
 
-        $(document).on('change keyup', '#admin_search', function(){
+        $(document).on('change keyup click', '#admin_search, delete_product', function(){
             $('#search_form').submit();
         });
 
-        $(document).on('submit', '#search_form', function(){
+        $(document).on('submit', '#search_form, .form_delete_product', function(){
             var form = $(this);
             $.post(form.attr('action'),form.serialize(), function(res){
                 //$(".category_name").text($(".category_list").val());
-                $('tbody').html(res);
+                console.log(res);
+                $('#partial').html(res);
             });
             return false;
         });
+
+        $(document).ready(function(){
+            $('.submit_search').click(function(){
+                $('#page').val($(this).val());
+            })
+        })
+
+        $(document).on('click', '.submit_search', function(){
+            $('#page').val($(this).val());
+            $(".form_admin_products_search").submit();
+        })
 
         // $(document).ready(function(){
         //     $("#edit_modal_button").click(function(){

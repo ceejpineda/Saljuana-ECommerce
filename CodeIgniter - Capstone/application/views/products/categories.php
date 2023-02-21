@@ -10,12 +10,13 @@
 </head>
 <body>
 <?php $this->load->view('partials/nav-user') ?>
-    <main class="w-90 d-flex justify-content-between">
-    <div class="row">
+    <main class="d-flex justify-content-between outline">
+    <div class="row w-100">
         <aside class="category_panel col-sm-2">
             <form action="/products/categories/filter" method="post" id="search">
                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                 <input class="form-control" type="search" name="product_name" placeholder="Product name" />
+                <input type="hidden" name="page" value="1" id="page">
             </form>
             <section class="products_categories">
                 <h4>Categories</h4>
@@ -25,7 +26,7 @@ foreach($categories as $category){
             <div class="d-flex category_item align-items-center">
                 <!-- <input type="hidden" name="category_list" id="category_list" value="<?=$names?>"> -->
                 <input class="form-check-input" type="checkbox" name="categories[]" form="search" value="<?=$category['id']?>">
-                <label for="search_checkbox"><span class=""><?=$category['category_name']?></span> (<?=$category['count']?>)</label>
+                <label for="search_checkbox"><span class="category_items"><?=$category['category_name']?></span> (<?=$category['count']?>)</label>
             </div>
 
 <?php
@@ -34,9 +35,9 @@ foreach($categories as $category){
                 <a class="show_all_products" href="">All Products</a>
             </section>
         </aside>
-        <article class="catalog col-sm-10">
+        <article class="catalog col-sm-10 outline">
             <div class="subheader">
-                <h2><span class="category_name"></span> (page <span class="page_number">1</span>)</h2>
+                <h2><span class="category_name"><span id="product_count">All</span> Items</h2>
                 <section class="pagination_top">
                     <a class="first_page" href="">first</a><!--
                 ---><a class="prev_page" href="">prev</a><!--
@@ -52,6 +53,7 @@ foreach($categories as $category){
                     <option value="2">Most Popular</option>
                 </select>
             </form>
+            <div id="paginated">
             <div class="d-flex row justify-content-center products_container">
 <?php
 foreach($products as $product){
@@ -75,18 +77,15 @@ foreach($products as $product){
 ?>
             </div>
             <section class="pagination">
-                <a href="">1</a><!--
-             --><a href="">2</a><!--
-             --><a href="">3</a><!--
-             --><a href="">4</a><!--
-             --><a href="">5</a><!--
-             --><a href="">6</a><!--
-             --><a href="">7</a><!--
-             --><a href="">8</a><!--
-             --><a href="">9</a><!--
-             --><a href="">10</a><!--
-             --><a class="next_page" href="">&rsaquo;</a>
+            <?php for($page = 1; $page<=$pages; $page++)
+{
+?>
+                <input type="submit" value="<?=$page?>" class="submit_search btn btn-secondary mx-2">
+<?php 
+}
+?>
             </section>
+            </div>
         </article>
     </div>
     </main>

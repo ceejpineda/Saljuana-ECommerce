@@ -86,4 +86,13 @@ class Product extends CI_Model
         return $this->db->query($query, $value)->row_array();
     }
 
+    function delete_by_id($id)
+    {
+        $query = "DELETE FROM products 
+                    WHERE id = ?";
+        $values = array($id);
+
+        return $this->db->query($query, $values);
+    }
+
 }
