@@ -487,16 +487,6 @@ figure.item{
     .header_admin h3{
         margin-left: 1.5%;
     }
-.form_admin_orders{
-    margin: 20px;
-    text-align: left;
-    position: relative;
-}
-    .form_admin_orders select{
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
 
 /*------------------------------------------------------------------*/
 /*  Additional for Admin Orders Dashboard Table Section    */    
@@ -508,7 +498,7 @@ figure.item{
     text-align: center;
 }
     .admin_orders_table td:first-child a{
-        text-decoration: underline;
+        text-decoration: none;
     }
 
 /*------------------------------------------------------------------*/
@@ -521,7 +511,7 @@ figure.item{
 /*------------------------------------------------------------------*/
 /*  Admin Order Info Summary Section   */
 /*------------------------------------------------------------------*/
-.admin_order_info{
+/* .admin_order_info{
     width: 300px;
     margin: 20px;
     padding: 10px;
@@ -543,12 +533,12 @@ figure.item{
     .admin_order_info p:first-child{
         width: 60px;
     }
-    .admin_order_info + aside{
+    /* .admin_order_info + aside{
         width: calc(100% - 300px - 40px - 20px - 40px - 10px);
         display: inline-block;
         vertical-align: top;
         margin: 20px;
-    }
+    } */ */
 
 /*------------------------------------------------------------------*/
 /*  Admin Order Info Table Section   */
@@ -699,28 +689,6 @@ figure.item{
 /*------------------------------------------------------------------*/
 /*  Modal BG and Button for Close Modal Sub-Section   */
 /*------------------------------------------------------------------*/
-.modal_bg{
-    z-index: 1;
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(25, 117, 255, 0.14);
-}
-dialog .btn_close{
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 1px 3.5px 0px 3.5px;
-    background-color: white;
-    border: none;
-}
-    dialog .btn_close:hover{
-        background-color: rgb(237, 237, 237);
-        border: 1px solid #a3a3a3;
-    }
 
 /*------------------------------------------------------------------*/
 /*  Headings and General Form Sub-Section   */
@@ -1024,6 +992,7 @@ a.logoff:hover{
 
 textarea:focus,
 input[type="text"]:focus,
+.form-select:focus,
 input[type="password"]:focus,
 input[type="datetime"]:focus,
 input[type="datetime-local"]:focus,
@@ -1078,4 +1047,15 @@ main{
 }
 #total{
     font-size: 24px;
+}
+.btn-outline-secondary{
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+}
+.btn-outline-secondary:hover{
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+nav{
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 0, 0, 0.2);
 }

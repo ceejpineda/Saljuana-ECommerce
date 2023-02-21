@@ -57,11 +57,33 @@ class Product extends CI_Model
         return $query->result_array();
     }
 
+    function search_admin_products($post)
+    {
+        $this->db->select('products.*, category_name');
+        $this->db->from('Products');
+        $this->db->join('Categories', 'Products.category_id = Categories.id');
+        $this->db->like('product_name', $post['admin_search']);
+        $this->db->or_like('products.id', $post['admin_search']);
+        $this->db->or_like('category_name', $post['admin_search']);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     function load_similar($id)
     {
         $query = "SELECT * FROM products WHERE category_id = ? ORDER BY id DESC";
         $value = array($id);
         return $this->db->query($query, $value)->result_array();
+    }
+
+    function get_edit_data($id)
+    {
+        $query = "SELECT products.*, category_name FROM products
+                    JOIN categories
+                    ON products.category_id = categories.id 
+                    WHERE products.id = ?";
+        $value = array($id);
+        return $this->db->query($query, $value)->row_array();
     }
 
 }

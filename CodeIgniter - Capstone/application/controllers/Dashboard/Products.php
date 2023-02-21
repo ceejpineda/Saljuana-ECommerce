@@ -22,6 +22,24 @@ class Products extends CI_Controller
         }
     }
 
+    public function do_search()
+    {
+        $post = $this->input->post(NULL, TRUE);
+        $products = $this->Product->search_admin_products($post);
+        $products_info = array();
+
+        foreach($products as $product)
+        {
+            $directory = $product['img_url'];
+            $url = scandir($directory);
+            $file = $url[2];
+            $product['url'] = $directory . '/' . $file;
+            $products_info[] = $product;
+        }
+        $data['products'] = $products_info;
+        $this->load->view('partials/admin_products', $data);
+    }
+
     public function process_add() {
         $post = $this->input->post(NULL, TRUE);
 
@@ -88,6 +106,10 @@ class Products extends CI_Controller
         }
       }
 
+      public function edit_data($id)
+      {
+        echo json_encode($this->Product->get_edit_data($id));
+      }
 
 
 

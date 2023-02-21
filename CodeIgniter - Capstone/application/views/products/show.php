@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>(Product Page) Tshirt | Lashopda</title>
-    <?php $this->load->view('partials/header') ?>
+<?php $this->load->view('partials/header') ?>
     <script>
 
         /*  For pagination highlight    */
@@ -101,7 +101,7 @@ foreach($urls as $url){
                         </section>
                     </aside>
                     <aside class="d-flex flex-column col-sm-9 prod_desc">
-                        <h2><?=$product_name?></h2>
+                        <h2 id="prod_name"><?=$product_name?></h2>
                         <textarea class="scroll" disabled><?=$description?></textarea>
                         <form action="/products/carts/add_to_cart" method="post">
                             <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
@@ -117,7 +117,7 @@ foreach($urls as $url){
                                         <p>$<span id="total"><?=$price?></span></p>
                                     </div>
                                 </div>
-                                <div class="col-sm-2 ">
+                                <div class="col-sm-2">
                                     <input class="btn btn-lg btn-primary add_to_cart" type="submit" value="Add to Cart">
                                 </div>
                                 <p class="item_added_confirm">Item added to the cart.</p>

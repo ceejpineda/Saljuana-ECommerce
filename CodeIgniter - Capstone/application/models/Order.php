@@ -10,6 +10,47 @@ class Order extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
+    function get_order($id)
+    {
+        $query = " SELECT orders.*, first_name, last_name FROM orders 
+                    JOIN users
+                    WHERE orders.id = ?";
+        $value = array($this->security->xss_clean($id));
+        $data = $this->db->query($query, $value)->row_array();
+
+        $query2 = "SELECT order_items.product_id, order_items.qty, order_items.price_when_ordered,
+                        order_items.name_when_ordered
+                        FROM orders 
+                        JOIN order_items 
+                        ON orders.id = order_items.order_id
+                        WHERE order_items.order_id = ?
+                        ORDER BY product_id ASC";
+
+        $data2 = $this->db->query($query2, $value)->result_array();
+
+        $data['order_items'] =  $data2;
+        return $data;
+    }
+
+    function search_admin_order($post)
+    {
+        $this->db->select('orders.*, first_name, last_name');
+        $this->db->from('Orders');
+        $this->db->join('Users', 'orders.user_id = users.id');
+        if($post['admin_orders_status'] != '0'){
+            $this->db->group_start();
+            $this->db->like('first_name', $post['admin_orders_search']);
+            $this->db->or_like('address', $post['admin_orders_search']);
+            $this->db->group_end();
+            $this->db->like('status', $post['admin_orders_status']);
+        }else{
+            $this->db->like('first_name', $post['admin_orders_search']);
+            $this->db->or_like('address', $post['admin_orders_search']);
+        }
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     function place_order($post, $items)
     {
         $total_amount = 0;
@@ -61,8 +102,14 @@ class Order extends CI_Model
                 'updated_at' => date('Y-m-d H:i:s')
             );
             $this->db->insert('order_items', $item_data);
+            $product_id = $item['product_id'];
+            $product_qty = $item['qty'];
+            $this->db->set('qty_sold', 'qty_sold+'.$product_qty, FALSE);
+            $this->db->set('inventory_count', 'inventory_count-'.$product_qty, FALSE);
+            $this->db->where('id', $product_id);
+            $this->db->update('products');
         }
-        $this->db->where('user_id', $user_info['user_id']);
-        $this->db->delete('cart');
+        $this->db->where('user_id', $this->session->userdata('user_id'));
+        $this->db->delete('cart_items');
     }
 }

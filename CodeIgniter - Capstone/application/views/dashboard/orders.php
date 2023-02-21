@@ -22,9 +22,18 @@
 
             /*  Submitting of forms will redirect to specified page based on action attribute    */
             $(document).on("submit", "form", function(){
-                window.location = $(this).attr("action");
+                //window.location = $(this).attr("action");
+                var form = $(this);
+                $.post(form.attr('action'),form.serialize(), function(res){
+                //$(".category_name").text($(".category_list").val());
+                    $('tbody').html(res);
+                });
                 return false;
             });
+
+            $(document).on("change keyup", "#order_search, #status_select", function(){
+                $('.form_admin_orders').submit();
+            })
             /**********************************************/
 
             /*  Pagination at footer    */
@@ -51,14 +60,17 @@
 
     <main>
         <p class="message_admin_orders"></p>
-        <form class="form_admin_orders" action="" method="post">
-            <input type="search" name="admin_orders_search" placeholder="&#x1F50D; search" />
-            <select name="admin_orders_status">
-                <option value="0">Show All</option>
-                <option>Order in process</option>
-                <option>Shipped</option>
-                <option>Cancelled</option>
-            </select>
+        <form class="form_admin_orders" action="/dashboard/orders/do_search" method="post">
+            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+            <div class="d-flex justify-content-between">
+                <input id="order_search" class="form-control w-25" type="search" name="admin_orders_search" placeholder="search" />
+                <select id="status_select" name="admin_orders_status" class="form-select w-25">
+                    <option value="0">Show All</option>
+                    <option value="pending">Order in process</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
         </form>
         <table class="admin_orders_table table table-striped table-hover">
             <thead>
@@ -77,7 +89,7 @@
 foreach($orders as $order){
 ?>
                 <tr>
-                    <td><a href="admin_order_detail_page.html"><?=$order['id']?></a></td>
+                    <td><a class="btn btn-outline-secondary" href="/dashboard/orders/show/<?=$order['id']?>"><?=$order['id']?></a></td>
                     <td><?=$order['first_name'] . ' ' . $order['last_name']?></td>
                     <td><?=date_format(date_create($order['created_at']), 'Y-m-d')?></td>
                     <td><?=$order['shipping']?></td>
@@ -86,7 +98,7 @@ foreach($orders as $order){
                     <td>
                         <form action="" method="post">
                             <input type="hidden" name="product_id" value="product_id"/>
-                            <select name="admin_orders_update">
+                            <select class="form-select" name="admin_orders_update">
                                 <option <?=($order['status']=='pending')?'selected':''?>>Order in process</option>
                                 <option <?=($order['status']=='shipped')?'selected':''?>>Shipped</option>
                                 <option <?=($order['status']=='cancelled')?'selected':''?>>Cancelled</option>

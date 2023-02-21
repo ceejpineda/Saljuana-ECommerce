@@ -15,10 +15,11 @@
     <main>
         <p class="message_admin_products"></p>
         <div class="d-flex justify-content-between">
-            <form class="form_admin_products_search w-25" action="" method="post">
-                <input class="form-control" type="search" name="admin_products_search" placeholder="search">
+            <form class="form_admin_products_search w-25" id="search_form" action="/dashboard/products/do_search" method="post">
+                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                <input class="form-control" type="search" id="admin_search" name="admin_search" placeholder="search">
             </form>
-            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add new product</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add_modal">Add new product</button>
         </div>
         <table class="admin_products_table table table-striped table-hover">
             <thead>
@@ -42,7 +43,7 @@ foreach($products as $product){
                     <td><?=$product['inventory_count']?></td>
                     <td><?=$product['qty_sold']?></td>
                     <td>
-                        <a class="btn btn-outline-primary" href="">Edit</a>
+                        <a class="btn btn-outline-primary edit_modal_button" data-bs-toggle="modal" data-bs-target="#edit_modal" href="/dashboard/products/edit_data/<?=$product['id']?>">Edit</a>
                         <a class="btn btn-primary" href="">Delete</a>
                     </td>
                 </tr>
@@ -78,7 +79,7 @@ foreach($products as $product){
     <div class="modal_bg_delete_product"></div>
     <div class="modal_bg"></div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content p-5">
             <div class="modal-header">
@@ -92,7 +93,7 @@ foreach($products as $product){
                     <label class="form-label">Name:</label>
                     <input class="form-control" type="text" name="product_name" id="product_name">
                     <label class="form-label">Description:</label>
-                    <textarea class="form-control" name="product_desc"></textarea>
+                    <textarea class="form-control" name="product_desc" id="product_desc"></textarea>
                     <label class="form-label">Categories:</label>
                     <div class="select_tag_container form-select">
                         <button class="dummy_select_tag" type="button"><span></span><span>&#9660;</span></button>
@@ -102,7 +103,7 @@ foreach($products as $product){
                     <label class="form-label">Add new category:</label>
                     <input class="form-control" type="text" name="product_add_category"/>
                     <label class="form-label">Price:</label>
-                    <input class="input_product_price form-control" type="number" name="product_price" min="0.01" step="0.01"/>
+                    <input class="input_product_price form-control" type="number" id="product_price" name="product_price" min="0.01" step="0.01"/>
                     <label class="form-label">Quantity (Inventory):</label>
                     <input class="input_product_qty form-control" type="number" name="product_qty"/>
                     <label class="img_field_name form-label">Images: </label>
@@ -120,6 +121,50 @@ foreach($products as $product){
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="edit_modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content p-5">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 edit_product_header" id="edit_modal_label">Edit Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form class="form_product_add_edit" action="/dashboard/products/process_add" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                    <input class="product_category_id" type="hidden" name="category_id" value= '0' id="product_category_id" />
+                    <label class="form-label">Name:</label>
+                    <input class="form-control edit_product_name" type="text" name="product_name" id="product_name">
+                    <label class="form-label">Description:</label>
+                    <textarea class="form-control edit_product_desc" name="product_desc" id="product_desc"></textarea>
+                    <label class="form-label">Categories:</label>
+                    <div class="select_tag_container form-select">
+                        <button class="dummy_select_tag" type="button"><span></span><span>&#9660;</span></button>
+                        <ul class="product_categories">
+                        </ul>
+                    </div>
+                    <label class="form-label">Add new category:</label>
+                    <input class="form-control" type="text" name="product_add_category"/>
+                    <label class="form-label">Price:</label>
+                    <input class="input_product_price form-control" type="number" id="product_price" name="product_price" min="0.01" step="0.01"/>
+                    <label class="form-label">Quantity (Inventory):</label>
+                    <input class="input_product_qty form-control" type="number" name="product_qty"/>
+                    <label class="img_field_name form-label">Images: </label>
+                    <input id="img_upload" type="file" name="product_img_file[]" multiple accept=".png, .jpg, .jpeg" />
+                    <label class="file_upload_label btn btn-secondary" for="img_upload">Upload</label>
+                    <ul class="img_upload_container">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn_preview_products_add_edit">Preview</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    
     <dialog class="admin_products_add_edit">
         <h3 class="add_edit_product_header">Edit Product - ID 0</h3>
         <button class="btn_close">

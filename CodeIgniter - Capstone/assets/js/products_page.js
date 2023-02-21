@@ -435,9 +435,9 @@
 
             /*  Clicking preview button will display a new tab of Preview page    */
             $(document).on("click", ".btn_preview_products_add_edit", function(){
-                var prevProductName = $(".form_product_add_edit").children(".input_product_name").val();
-                var prevProductDesc = $(".form_product_add_edit").children(".input_product_desc").val();
-                var prevProductPrice = $(".form_product_add_edit").children(".input_product_price").val();
+                var prevProductName = $("#product_name").val();
+                var prevProductDesc = $("#product_desc").val();
+                var prevProductPrice = $("#product_price").val();
 
                 var totalOptions = 3;
                 var prevProductPriceOption = [];
@@ -514,13 +514,18 @@
                                     //'<p>' + prevProductDesc + '</p>' +
                                     '<form action="" method="post">' +
                                         '<input type="hidden" name="product_id" value="product_id"/>' +
+                                        `<div class="d-flex row  align-items-end justify-content-end">`+
                                         '<select class="new_order_qty">' +
                                             '<option>' + prevProductPriceOption[0] + '</option>' +
                                             '<option>' + prevProductPriceOption[1] + '</option>' +
                                             '<option>' + prevProductPriceOption[2] + '</option>' +
                                         '</select>' +
-                                        '\n<input type="submit" value="Buy"/>' +
+                                        '\n'+
+                                        `<div class="col-sm-2 ">`+
+                                            `<input class="btn btn-lg btn-primary add_to_cart" type="submit" value="Add to Cart">`+
+                                        `</div>` +
                                         '<p class="item_added_confirm">Item added to the cart.</p>' +
+                                        `</div>`+
                                     '</form>' +
                                 '</aside>' +
                             '</div>' +
@@ -531,3 +536,69 @@
             var previewWindow = window.open("", "Preview");
             previewWindow.document.write(previewWindowHTML);
         }
+
+        $(document).on('change keyup', '#admin_search', function(){
+            $('#search_form').submit();
+        });
+
+        $(document).on('submit', '#search_form', function(){
+            var form = $(this);
+            $.post(form.attr('action'),form.serialize(), function(res){
+                //$(".category_name").text($(".category_list").val());
+                $('tbody').html(res);
+            });
+            return false;
+        });
+
+        // $(document).ready(function(){
+        //     $("#edit_modal_button").click(function(){
+        //         $("#edit_modal_label").text('Lol');
+        //     })
+        // })
+
+        $(document).on('click', '.edit_modal_button', function(){
+            var link = $(this);
+            var productName;
+            $.get(link.attr('href'), link.serialize(), function(res){
+                res = JSON.parse(res);
+                console.log(res);
+                var productID = res.id;
+                var productName = res.product_name;
+                var headerStr = "Edit Product - ID " + productID;
+                var productDesc = res.description;
+                var productCategory = '';
+                var productInventory = res.inventory_count;
+                var productPrice = res.price;
+                //var productInventory =
+                //var productImgSrc = $(this).parent().parent().parent().children("td:first-child").find("img").attr("src");
+                //var productImgAlt = $(this).parent().parent().parent().children("td:first-child").find("img").attr("alt");
+    
+                // var htmlImgStr = "" +
+                //     '<li class="img_upload_section">' +
+                //         '<figure>' +
+                //             '<img src="' + productImgSrc + '" alt="' + productImgAlt + '" />' +
+                //         '</figure>' +
+                //         '<p class="img_filename">' + productImgAlt + '</p>' +
+                //         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash btn_img_upload_delete" viewBox="0 0 16 16">' +
+                //             '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>' +
+                //             '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>' +
+                //         '</svg>' +
+                //          '<input type="checkbox" name="main_image" value="filename" />' +
+                //         // '<input type="checkbox" name="img_upload_main_id" value="filename" />' +
+                //         '<label>main</label>' +
+                //     '</li>';
+    
+                //$(".img_upload_container").html(htmlImgStr);
+                $(".edit_product_header").text(headerStr);
+                $(".edit_product_name").val(productName);
+                $(".edit_product_desc").val(productDesc);
+                $(".dummy_select_tag span:first-child").text(productCategory);
+                $(".input_product_price").val(productPrice);
+                $(".input_product_qty").val(productInventory);
+                $(".img_upload_container").html(htmlImgStr);
+    
+                $('#edit_modal').modal('show');
+            })
+            
+            return false;
+        })
