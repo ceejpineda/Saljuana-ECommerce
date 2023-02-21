@@ -113,7 +113,7 @@ foreach($products as $product){
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-secondary">Preview</button>
+                    <button type="button" class="btn btn-secondary btn_preview_products_add_edit">Preview</button>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>

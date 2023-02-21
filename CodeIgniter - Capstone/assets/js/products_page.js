@@ -472,35 +472,46 @@
                     '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
                     '<title>(Product Page) '+ prevProductName +' | Lashopda</title>' +
                     
-                    '<link rel="stylesheet" type="text/css" href="../../../application/views/assets/css/normalize.css" />' +
-                    '<link rel="stylesheet" type="text/css" href="../../../application/views/assets/css/style.css" />' +
+                    `<script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>` +
+                    `<script src="<?= base_url('assets/js/jquery-ui.js') ?>"></script>` +
+                    `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">`+
+                    `<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>`+
+                    `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">`+
+                    `<link rel="stylesheet" type="text/css" href="/assets/style/normalize.css" />`+
+                    `<link rel="stylesheet" type="text/css" href="/assets/style/style.css" />`+
                     
                 '</head>' +
                 '<body>' +
-                    '<header>' +
-                        '<a href=""><h2>Lashopda</h2></a>' +
-                        '<a class="nav_end" href=""><h3>Shopping Cart (<span class="cart_quantity">0</span>)</h3></a>' +
-                    '</header>' +
+                
+                    `<nav class="navbar navbar-expand-lg fixed-top" id="nav" data-bs-theme="dark">`+
+                    `<div class="container-fluid">`+
+                        `<a class="navbar-brand" href="#">Saljuana</a>`+
+                        `<div class="collapse navbar-collapse" id="navbarNavAltMarkup">`+
+                            `<div class="navbar-nav">`+
+                                `<a class="nav-link" href="/dashboard/products">Products</a>`+
+                                `<a class="nav-link" href="/dashboard/orders">Order</a>`+
+                            `</div>`+
+                        `</div>`+
+                        `<a class="btn logoff" type="submit">Log-Off</a>`+
+                    `</div>`+
+                    `</nav>` +
+
                     '<main>' +
-                        '<section class="item_panel">' +
-                            '<a class="go_back" href=""><p>Go Back</p></a>' +
-                            '<div class="item_details">' +
-                                '<aside class="img_section">' +
+                        '<section class="item_panel d-flex flex-column">' +
+                            '<div class="item_details d-flex row">' +
+                                '<aside class="img_section col-sm-3">' +
                                     '<img class="main_img" src="' + prevProductImg[mainIndexImg] + '" alt="img"/>' +
                                     '<section>';
             for(var i = 0; i < prevProductImg.length; i++){
                 previewWindowHTML += '<img class="sub_img" src="' + prevProductImg[i] + '" alt="img"/>'
             }
-                                        // '<img class="sub_img" src="' + prevProductImg + '" alt="img"/>' +
-                                        // '<img class="sub_img default_main_img" src="' + '" alt="img"/>' +
-                                        // '<img class="sub_img" src="' + '" alt="img"/>' +
-                                        // '<img class="sub_img" src="' + '" alt="img"/>' +
             previewWindowHTML += '' +
                                     '</section>' +
                                 '</aside>' +
-                                '<aside class="desc_section">' +
+                                '<aside class="d-flex flex-column col-sm-9 prod_desc">' +
                                     '<h2>' + prevProductName + '</h2>' +
-                                    '<p>' + prevProductDesc + '</p>' +
+                                    `<textarea class="scroll" disabled>${prevProductDesc}</textarea>`+
+                                    //'<p>' + prevProductDesc + '</p>' +
                                     '<form action="" method="post">' +
                                         '<input type="hidden" name="product_id" value="product_id"/>' +
                                         '<select class="new_order_qty">' +
