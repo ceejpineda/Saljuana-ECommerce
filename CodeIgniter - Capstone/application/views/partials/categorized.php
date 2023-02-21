@@ -10,9 +10,12 @@ foreach($products as $product){
                         <div class="name_container d-flex flex-column align-items-center justify-content-between">
                             <p><?=$product['product_name']?></p>
                         </div>
-                        <h3><?=$product['price']?></h3>
+                        <h5 class="mt-1 pe-4">$<?=$product['price']?></h5>
                     </div>
-                    <form action="" method="post" class="d-flex quick_buy">
+                    <form action="/products/carts/add_to_cart" method="post" class="d-flex quick_buy">
+                        <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />    
+                        <input type="hidden" id="product_id" name="product_id" value="<?=$product['id']?>"/>
+                        <input type="hidden" id="qty" name="qty" value="1"/>
                         <input class="btn btn-primary h-100" type="submit" value="Buy Now">
                     </form>
                 </section>
@@ -25,7 +28,8 @@ foreach($products as $product){
 {
 ?>
                 <input type="submit" value="<?=$page?>" class="submit_search btn btn-secondary mx-2">
-<?php 
+                <?php 
 }
 ?>
+            <input type="hidden" name="count" value="<?=$count?>" id="count_products">
             </section>

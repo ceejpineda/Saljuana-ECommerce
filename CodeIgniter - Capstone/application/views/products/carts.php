@@ -8,31 +8,29 @@
 <?php $this->load->view('partials/header') ?>
     <script>
         $(document).ready(function(){
-            /*  For submitting forms, redirect to page    */
-            // $(document).on("submit", "form", function(){
-            //     window.location = $(this).attr("action");
-            //     return false;
-            // });
-            /**********************************************/
-
-            /*  Delete product when clicked    */
-            // $(document).on("click", ".btn_delete_product", function(){
-            //     $(this).parent().parent().parent().remove();
-            //     return false;
-            // });
-            /**********************************************/
+            
         });
     </script>
 </head>
 <body>
-<?php $this->load->view('partials/nav-user') ?>
+    <nav class="navbar navbar-expand-lg fixed-top" id="nav" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Saljuana</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            </div>
+            <div>
+                <a href="/products/carts" class="btn logoff" type="submit">Shopping Cart (<span id="cart_items"><?=$count?></span>)</a>
+                <a href="/users/logout" class="btn logoff" type="submit">Log-Off</a>
+            </div>
+        </div>
+    </nav>
     <main class="row d-flex flex-row">
         <section class="cart_table_section col-sm-6">
-            <table class="table table-striped">
+            <table class="table table-striped text-start">
                 <thead>
                     <tr>
                         <th>Item</th>
-                        <th>Price</th>
+                        <th>Unit Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
                     </tr>
@@ -44,8 +42,14 @@ foreach($items as $item){
 ?>
                     <tr>
                         <td><?=$item['product_name']?></td>
-                        <td><?=$item['price']?></td>
-                        <td><?=$item['qty']?></td>
+                        <td>$<?=$item['price']?></td>
+                        <td class="d-flex qty_td">
+                            <form action="">
+                                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                                <input class="form-control qty_cart text-start" type="number" name="qty" id="qty" value="<?=$item['qty']?>">
+                            </form>
+                            <a type="submit" class="btn btn-danger cart_delete">Delete</a>
+                        </td>
                         <td>$<?=$total?></td>
                     </tr>
 <?php

@@ -8,16 +8,12 @@ class Categories extends CI_Controller
         parent::__construct();
         $this->load->model('Product');
         $this->load->model('Category');
+        $this->load->model('Cart');
     }
 
     public function index()
     {
-        if($this->session->userdata('is_admin') != 1)
-        {
-            redirect('/');
-        }
-        else
-        {
+
             $products = $this->Product->load_all_products();
 
             $category_count = $this->Category->load_all_category_count();
@@ -35,12 +31,12 @@ class Categories extends CI_Controller
             $data['count'] = count($products);
             $data['products'] = $products_info;
             $data['categories'] = $category_count;
-            $pages = ceil(count($products)/5);
-            $paged_products = array_slice($products_info, 0*5, 5); 
+            $pages = ceil(count($products)/10);
+            $paged_products = array_slice($products_info, 0, 10); 
             $data['products'] = $paged_products;
             $data['pages'] = $pages;
+            $data['count'] = $this->Cart->get_count();
             $this->load->view('products/categories', $data);
-        }
     }
 
     public function get_categories_name() 
@@ -67,9 +63,10 @@ class Categories extends CI_Controller
             $products_info[] = $product;
         }
         $data['products'] = $products_info;
-        $pages = ceil(count($products)/5);
+        $data['count'] = count($products);
+        $pages = ceil(count($products)/10);
 		$page_number = $this->input->post('page')-1;
-		$paged_products = array_slice($products_info, $page_number*5, 5); 
+		$paged_products = array_slice($products_info, $page_number*10, 10); 
 		$data['products'] = $paged_products;
 		$data['pages'] = $pages;
         $this->load->view('partials/categorized', $data);

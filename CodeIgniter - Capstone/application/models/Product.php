@@ -23,9 +23,7 @@ class Product extends CI_Model
         $query = "SELECT products.* , category_name FROM PRODUCTS
                     JOIN CATEGORIES on categories.id = products.category_id
                     WHERE products.id = ?";
-        $values = array(
-                    $this->security->xss_clean($id)
-                    );
+        $values = array($this->security->xss_clean($id));
         return $this->db->query($query, $values)->row_array();
     }
 
@@ -52,6 +50,13 @@ class Product extends CI_Model
         $this->db->like('product_name', $post['product_name']);
         if(isset($post['categories'])){
             $this->db->where_in('category_id', $post['categories']);
+        }
+        if($post['sort_by'] == 0){
+            $this->db->order_by('price', 'ASC');
+        }else if($post['sort_by'] == 1){
+            $this->db->order_by('price', 'DESC');
+        }else if($post['sort_by'] == 2){
+            $this->db->order_by('qty_sold', 'DESC');
         }
         $query = $this->db->get();
         return $query->result_array();

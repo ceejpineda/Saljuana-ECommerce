@@ -1062,3 +1062,16 @@ main{
 nav{
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 0, 0, 0.2);
 }
+.qty_cart{
+    height: 20px;
+    width: 50px;
+}
+.qty_td{
+    flex-grow: 0;
+}
+.cart_delete{
+    height: 20px;
+    width: 40px;
+    padding: 0;
+    font-size: 12px;
+}

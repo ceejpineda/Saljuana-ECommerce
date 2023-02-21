@@ -9,8 +9,18 @@
     <script src="<?= base_url('assets/js/categories.js') ?>"></script>
 </head>
 <body>
-<?php $this->load->view('partials/nav-user') ?>
-    <main class="d-flex justify-content-between outline">
+    <nav class="navbar navbar-expand-lg fixed-top" id="nav" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Saljuana</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            </div>
+            <div>
+                <a href="/products/carts" class="btn logoff" type="submit">Shopping Cart (<span id="cart_items"><?=$count?></span>)</a>
+                <a href="/users/logout" class="btn logoff" type="submit">Log-Off</a>
+            </div>
+        </div>
+    </nav>
+    <main class="d-flex justify-content-between">
     <div class="row w-100">
         <aside class="category_panel col-sm-2">
             <form action="/products/categories/filter" method="post" id="search">
@@ -35,24 +45,18 @@ foreach($categories as $category){
                 <a class="show_all_products" href="">All Products</a>
             </section>
         </aside>
-        <article class="catalog col-sm-10 outline">
-            <div class="subheader">
+        <article class="catalog col-sm-10">
+            <div class="subheader d-flex align-items-center justify-content-between">
                 <h2><span class="category_name"><span id="product_count">All</span> Items</h2>
-                <section class="pagination_top">
-                    <a class="first_page" href="">first</a><!--
-                ---><a class="prev_page" href="">prev</a><!--
-                ---><p><span class="page_number">1</span></p><!--
-                ---><a class="next_page" href="">next</a>
-                </section>
+                <div>
+                    <label class="mb-0 mt-1">Sorted by </label>
+                    <select class="form-select mb-1" name="sort_by" form="search">
+                        <option value="0">Price: Low to High</option>
+                        <option value="1">Price: High to Low</option>
+                        <option value="2">Most Popular</option>
+                    </select>
+                </div>
             </div>
-            <form action="" method="post">
-                <label>Sorted by </label>
-                <select name="sort_by">
-                    <option value="0">Price: Low to High</option>
-                    <option value="1">Price: High to Low</option>
-                    <option value="2">Most Popular</option>
-                </select>
-            </form>
             <div id="paginated">
             <div class="d-flex row justify-content-center products_container">
 <?php
@@ -66,10 +70,13 @@ foreach($products as $product){
                         <div class="name_container d-flex flex-column align-items-center justify-content-between">
                             <p><?=$product['product_name']?></p>
                         </div>
-                        <h3><?=$product['price']?></h3>
+                        <h5 class="mt-1 pe-4">$<?=$product['price']?></h5>
                     </div>
-                    <form action="" method="post" class="d-flex quick_buy">
-                        <input class="btn btn-primary h-100" type="submit" value="Buy Now">
+                    <form action="/products/carts/add_to_cart" method="post" class="d-flex quick_buy">
+                        <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />    
+                        <input type="hidden" id="product_id" name="product_id" value="<?=$product['id']?>"/>
+                        <input type="hidden" id="qty" name="qty" value="1"/>
+                        <input class="btn btn-primary h-100 quick_buy_button" type="submit" value="Buy Now">
                     </form>
                 </section>
 <?php
@@ -84,6 +91,9 @@ foreach($products as $product){
 <?php 
 }
 ?>
+    <div class="alert alert-success alert-dismissible fade show fixed-top mt-5" role="alert">
+        Successfully added to cart!
+    </div>
             </section>
             </div>
         </article>

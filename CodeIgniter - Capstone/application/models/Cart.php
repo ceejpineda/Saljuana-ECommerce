@@ -5,6 +5,12 @@ class Cart extends CI_Model
 {
     protected $table = 'cart_items';
 
+    function get_count()
+    {   $query = 'SELECT count(*) as count FROM cart_items WHERE user_id = ?';
+        $value = array($this->session->userdata('user_id'));
+        return $this->db->query($query, $value)->row_array()['count'];
+    }
+
     function insert_to_cart_items($data)
     {
         $existing_cart_item = $this->db->get_where('cart_items', array('user_id' => $data['user_id'], 'product_id' => $data['product_id']))->row();

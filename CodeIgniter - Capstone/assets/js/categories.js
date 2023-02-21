@@ -12,6 +12,8 @@
 
         $(document).ready(function(){
 
+            $('.alert').hide();
+
             /*  Product categories selection    */
             $(document).on("click", ".products_categories > a", function(){
                 categoryName = $(this).text().split("(")[0];
@@ -59,20 +61,22 @@
             /**********************************************/
 
             /*  For submission of forms    */
-            $(document).on("submit", "form", function(){
+            $(document).on("submit", "#search", function(){
                 pageNumHighlight(pageNum);
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(), function(res){
                     $(".category_name").text($(".category_list").val());
                     $('#paginated').html(res);
+                    $('#product_count').text($('#count_products').val());
                 });
                 return false;
             });
             /**********************************************/
 
-            $(document).on("change keyup", "input", function(){
+            $(document).on("change keyup", "input, select", function(){
                 $("#search").submit();
             })
+
 
             $('.submit_search').click(function(){
                 $('#page').val($(this).val());
@@ -81,5 +85,25 @@
             $(document).on('click', '.submit_search', function(){
                 $('#page').val($(this).val());
                 $("#search").submit();
+            })
+
+            $(document).on('submit', '.quick_buy', function(){
+                var form = $(this);
+                $.post(form.attr('action'),form.serialize(), function(){
+                    $('.alert').show();
+                    setTimeout(function() {
+                        $('.alert').fadeOut();
+                    }, 1000);
+                    $.get('/products/carts/get_cart_count', function(res){
+                        console.log(res);
+                        $('#cart_items').text(res);
+                    });
+                });
+                //return false;
+            })
+
+            $(document).on('click', '.quick_buy_button', function(){
+                $('.quick_buy').submit();
+                return false;
             })
         });
