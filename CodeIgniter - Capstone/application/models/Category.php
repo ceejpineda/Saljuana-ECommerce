@@ -18,7 +18,7 @@ class Category extends CI_Model
         return $this->db->query($query)->result_array();
     }
 
-     function create_category($category_name)
+    function create_category($category_name)
     {
         $data = array(
             'category_name' => $category_name

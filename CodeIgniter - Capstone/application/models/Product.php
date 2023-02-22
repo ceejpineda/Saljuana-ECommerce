@@ -100,4 +100,22 @@ class Product extends CI_Model
         return $this->db->query($query, $values);
     }
 
+    function edit_product($post)
+    {
+        $query = "UPDATE products SET
+                    product_name = ?,
+                    category_id = ?,
+                    price = ?,
+                    `description` = ?,
+                    inventory_count = ?,
+                    updated_at = NOW()
+                    WHERE id = ?";
+        $values = array(
+                $post['product_name'], $post['category_id'],
+                $post['product_price'], $post['product_desc'],
+                $post['product_qty'], $post['product_edit_id']
+        );
+        return $this->db->query($query, $values);
+    }
+
 }

@@ -57,6 +57,7 @@
 
             /*  Open add new product dialog box    */
             $(document).on("click", ".btn_add_product", function(){
+                $('.form_product_add_edit').attr('action', '/dashboard/products/process_add')
                 $(".add_edit_product_header").text("Add a new product");
                 $(".input_product_name").val("");
                 $(".input_product_desc").val("");
@@ -67,8 +68,6 @@
                 $(".btn_submit_products_add_edit").val("Add");
                 $(".btn_submit_products_add_edit").removeClass("edit_product_submit");
                 $(".btn_submit_products_add_edit").addClass("add_product_submit");
-                $(".modal_bg").show();
-                $("dialog.admin_products_add_edit").show();
             });
             /**********************************************/
 
@@ -116,48 +115,48 @@
             /**********************************************/
 
              /*  Open edit product dialog box    */
-             $(document).on("click", ".product_edit_link", function(){
-                var productID = $(this).parent().parent().siblings(".product_id").text();
-                var headerStr = "Edit Product - ID " + productID;
-                var productName = $(this).parent().parent().siblings(".product_id + td").text();
-                var productDesc = "Product description...Product description...Product description...Product description...Product description...Product description...Product description...";
-                var productCategory = productName;
-                var productPrice = 19.99;
-                var productInventory = $(this).parent().parent().siblings(".product_id + td + td").text();
-                var productImgSrc = $(this).parent().parent().parent().children("td:first-child").find("img").attr("src");
-                var productImgAlt = $(this).parent().parent().parent().children("td:first-child").find("img").attr("alt");
+            //  $(document).on("click", ".product_edit_link", function(){
+            //     var productID = $(this).parent().parent().siblings(".product_id").text();
+            //     var headerStr = "Edit Product - ID " + productID;
+            //     var productName = $(this).parent().parent().siblings(".product_id + td").text();
+            //     var productDesc = "Product description...Product description...Product description...Product description...Product description...Product description...Product description...";
+            //     var productCategory = productName;
+            //     var productPrice = 19.99;
+            //     var productInventory = $(this).parent().parent().siblings(".product_id + td + td").text();
+            //     var productImgSrc = $(this).parent().parent().parent().children("td:first-child").find("img").attr("src");
+            //     var productImgAlt = $(this).parent().parent().parent().children("td:first-child").find("img").attr("alt");
 
-                var htmlImgStr = "" +
-                    '<li class="img_upload_section">' +
-                        '<figure>' +
-                            '<img src="' + productImgSrc + '" alt="' + productImgAlt + '" />' +
-                        '</figure>' +
-                        '<p class="img_filename">' + productImgAlt + '</p>' +
-                        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash btn_img_upload_delete" viewBox="0 0 16 16">' +
-                            '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>' +
-                            '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>' +
-                        '</svg>' +
-                         '<input type="checkbox" name="main_image" value="filename" />' +
-                        // '<input type="checkbox" name="img_upload_main_id" value="filename" />' +
-                        '<label>main</label>' +
-                    '</li>';
+            //     var htmlImgStr = "" +
+            //         '<li class="img_upload_section">' +
+            //             '<figure>' +
+            //                 '<img src="' + productImgSrc + '" alt="' + productImgAlt + '" />' +
+            //             '</figure>' +
+            //             '<p class="img_filename">' + productImgAlt + '</p>' +
+            //             '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash btn_img_upload_delete" viewBox="0 0 16 16">' +
+            //                 '<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>' +
+            //                 '<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>' +
+            //             '</svg>' +
+            //              '<input type="checkbox" name="main_image" value="filename" />' +
+            //             // '<input type="checkbox" name="img_upload_main_id" value="filename" />' +
+            //             '<label>main</label>' +
+            //         '</li>';
 
-                $(".add_edit_product_header").text(headerStr);
-                $(".input_product_name").val(productName);
-                $(".input_product_desc").val(productDesc);
-                $(".dummy_select_tag span:first-child").text(productCategory);
-                $(".input_product_price").val(productPrice);
-                $(".input_product_qty").val(productInventory);
-                $(".img_upload_container").html(htmlImgStr);
+            //     $(".add_edit_product_header").text(headerStr);
+            //     $(".input_product_name").val(productName);
+            //     $(".input_product_desc").val(productDesc);
+            //     $(".dummy_select_tag span:first-child").text(productCategory);
+            //     $(".input_product_price").val(productPrice);
+            //     $(".input_product_qty").val(productInventory);
+            //     $(".img_upload_container").html(htmlImgStr);
 
-                $(".products_add_edit_btn .product_id").val(productID);
-                $(".btn_submit_products_add_edit").val("Update");
-                $(".btn_submit_products_add_edit").removeClass("add_product_submit");
-                $(".btn_submit_products_add_edit").addClass("edit_product_submit");
-                $(".modal_bg").show();
-                $("dialog.admin_products_add_edit").show();
-                return false;
-            });
+            //     $(".products_add_edit_btn .product_id").val(productID);
+            //     $(".btn_submit_products_add_edit").val("Update");
+            //     $(".btn_submit_products_add_edit").removeClass("add_product_submit");
+            //     $(".btn_submit_products_add_edit").addClass("edit_product_submit");
+            //     $(".modal_bg").show();
+            //     $("dialog.admin_products_add_edit").show();
+            //     return false;
+            // });
             /**********************************************/
 
             /*  Clicking add button will submit the form using ajax    */
@@ -210,6 +209,8 @@
                         '<li class="d-flex align-items-center product_category_edit_delete_section arr_' + i + '">' +
     
                             '\n\t<form class="form_product_category_edit" action="" method="post">' +
+                            '<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />'+
+
                                 '\n\t\t<input class="product_category_id" type="hidden" name="category_id" value= '+category_id+' />' +
                                 '\n\t\t<input class="product_category_text_input" readonly type="text" value="' + category_name + '"/>' +
                             '\n\t</form>' +
@@ -594,6 +595,7 @@
 
 
         $(document).on('click', '.edit_modal_button', function(){
+            $('.form_product_add_edit').attr('action', '/dashboard/products/process_edit')
             var link = $(this);
             $.get(link.attr('href'), link.serialize(), function(res){
                 res = JSON.parse(res);
@@ -602,9 +604,10 @@
                 var productName = res.product_name;
                 var headerStr = "Edit Product - ID " + productID;
                 var productDesc = res.description;
-                var productCategory = '';
+                var productCategory = res.category_name;
                 var productInventory = res.inventory_count;
                 var productPrice = res.price;
+                var categoryID = res.category_id;
                 console.log(res.url);
 
                 
@@ -632,13 +635,15 @@
                 $(".img_upload_container").html(htmlImgStr);
                 $(".edit_product_header").text(headerStr);
                 $(".edit_product_name").val(productName);
+                $(".product_category_id").val(categoryID);
+                $(".product_edit_id").val(productID);
                 $(".edit_product_desc").val(productDesc);
                 $(".dummy_select_tag span:first-child").text(productCategory);
                 $(".input_product_price").val(productPrice);
                 $(".input_product_qty").val(productInventory);
                 $(".img_upload_container").html(htmlImgStr);
     
-                $('#edit_modal').modal('show');
+                //$('#edit_modal').modal('show');
             })
             
             return false;

@@ -89,9 +89,6 @@ class Products extends CI_Controller
                 If it is already created, meaning there is a Duplicate Named Product*/
             if (!is_dir($upload_path)) {
                 mkdir($upload_path, 0777, true);
-            }else{
-                echo "Duplicate Item";
-                return;
             }
         
             $files_data = array();
@@ -131,7 +128,7 @@ class Products extends CI_Controller
             $this->Product->add_product($post);
             $products = $this->Product->load_all_products_admin();
             $data['products'] = $products;
-            //redirect('/dashboard/products');
+            redirect('/dashboard/products');
         } else {
             // No files were uploaded
             echo "You did not select any files to upload.";
@@ -159,6 +156,13 @@ class Products extends CI_Controller
         echo json_encode($product);
     }
 
+    public function process_edit()
+    {
+        var_dump($this->input->post());
+        $post = $this->input->post(NULL, TRUE);
+        $this->Product->edit_product($post);
+        redirect('/dashboard/products');
+    }
 
 
 }

@@ -20,7 +20,7 @@
                 <input type="hidden" name="page" value="1" id="page">
                 <input class="form-control" type="search" id="admin_search" name="admin_search" placeholder="search">
             </form>
-            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add_modal">Add new product</button>
+            <button class="btn btn-primary btn_add_product" type="button" data-bs-toggle="modal" data-bs-target="#add_modal">Add new product</button>
         </div>
         <div id="partial">
         <table class="admin_products_table table table-striped table-hover">
@@ -92,6 +92,7 @@ foreach($products as $product){
                 <div class="modal-body">
                     <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                     <input class="product_category_id" type="hidden" name="category_id" value= '999' id="product_category_id" />
+                    <input class="product_edit_id" type="hidden" name="product_edit_id" value= '999' id="product_category_id" />
                     <label class="form-label">Name:</label>
                     <input class="form-control" type="text" name="product_name" id="product_name">
                     <label class="form-label">Description:</label>
@@ -134,6 +135,7 @@ foreach($products as $product){
             <form class="form_product_add_edit" action="/dashboard/products/process_add" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                    <input class="product_edit_id" type="hidden" name="product_edit_id" value= '999' id="product_category_id" />
                     <input class="product_category_id" type="hidden" name="category_id" value= '0' id="product_category_id" />
                     <label class="form-label">Name:</label>
                     <input class="form-control edit_product_name" type="text" name="product_name" id="product_name">

@@ -607,14 +607,6 @@ figure.item{
     text-align: left;
     position: relative;
 }
-    .btn_add_product{
-        background-color: rgb(51, 51, 247);
-        color: white;
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
 /*------------------------------------------------------------------*/
 /*  Additional for Admin Products Dashboard Table Section   */
 /*------------------------------------------------------------------*/
