@@ -16,7 +16,7 @@
             
 
             /*  For submission of forms & updating of cart quantity    */
-            $(document).on('submit', 'form', function(){
+            $(document).on('submit', '.add_to_cart', function(){
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(), function(){
                     $('.alert').show();
@@ -88,7 +88,7 @@ foreach($urls as $url){
                     <aside class="d-flex flex-column col-sm-9 prod_desc">
                         <h2 id="prod_name"><?=$product_name?></h2>
                         <textarea class="scroll" disabled><?=$description?></textarea>
-                        <form action="/products/carts/add_to_cart" method="post">
+                        <form action="/products/carts/add_to_cart" method="post" class="add_to_cart">
                             <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                             <input type="hidden" id="product_id" name="product_id" value="<?=$id?>"/>
                             <div class="d-flex row  align-items-end justify-content-end">
@@ -130,6 +130,50 @@ foreach($similar as $item)
             </div>
         </article>
     </main>
+    <div class="d-flex container-fluid bg-light justify-content-center mt-5">
+        <div class="col-sm-7 table-overflow mt-3 mb-5">
+            <div class="review mb-3 pb-3">
+                <form action="/products/reviews/post_review" method="POST">
+                    <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                    <input type="hidden" name="product_id" value="<?=$id?>" />
+                    <h3>Leave a Review</h3>
+                    <textarea class="form-control" name="review" id="review" cols="100" rows="5" class=""></textarea>
+                    <div class="text-end mt-3 d-flex justify-content-between">
+                        <div class="rating">
+                            <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                            <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                            <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                            <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                            <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                        </div>
+                        <input type="submit" value="Post Review" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+<?php 
+foreach($reviews as $review){
+?>
+            <div class='review mb-5'>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex">
+                            <h5 class="me-3"><?=$review['first_name'] . " " . $review['last_name']?></h5>
+                            <div>
+                                <span class="fa fa-star <?=($review['rating'] > 0)?'checked-rating':''?>"></span>
+                                <span class="fa fa-star <?=($review['rating'] > 1)?'checked-rating':''?>"></span>
+                                <span class="fa fa-star <?=($review['rating'] > 2)?'checked-rating':''?>"></span>
+                                <span class="fa fa-star <?=($review['rating'] > 3)?'checked-rating':''?>"></span>
+                                <span class="fa fa-star <?=($review['rating'] > 4)?'checked-rating':''?>"></span>
+                            </div>
+                        </div>
+                        <p><?=$review['created_at']?></p>
+                    </div>
+                    <p><?=$review['review']?></p>
+            </div>
+<?php
+}
+?>
+        </div>
+    </div>
     <div class="alert alert-success alert-dismissible fade show fixed-top mt-5 text-center" role="alert">
         Successfully added to cart!
     </div>

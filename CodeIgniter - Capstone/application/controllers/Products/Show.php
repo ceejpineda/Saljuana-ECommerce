@@ -8,7 +8,6 @@ class Show extends CI_Controller
         parent::__construct();
         $this->load->model('Product');
         $this->load->model('Cart');
-
     }
 
     public function index($id)
@@ -17,7 +16,6 @@ class Show extends CI_Controller
         $directory = $product['img_url'];
         $similar = $this->Product->load_similar($product['category_id']);
         $similar = array_slice($similar, 0, 6);
-
         $product_url = array();
 
         $urls = scandir($directory);
@@ -34,6 +32,10 @@ class Show extends CI_Controller
         $product['urls'] = $product_url;
         $product['similar'] = $similar;
         $product['count'] = $this->Cart->get_count();
+
+        $this->load->model('Review');
+        $product['reviews'] = $this->Review->get_review_by_product_id($id);
+
         $this->load->view('products/show', $product);
     }
 }

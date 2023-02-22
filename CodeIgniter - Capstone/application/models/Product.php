@@ -5,10 +5,12 @@ class Product extends CI_Model
 {
     function load_all_products()
     {
-        $query = "SELECT products.id, category_name, product_name ,img_url, price, description, category_id 
+        $query = "SELECT products.id, category_name, product_name ,img_url, price, `description`, category_id, AVG(reviews.rating) as rating
                     FROM products
                     JOIN categories 
-                    ON categories.id = products.category_id;";
+                    ON categories.id = products.category_id
+                    LEFT JOIN reviews ON reviews.product_id = products.id
+                    GROUP BY products.id;";
         return $this->db->query($query)->result_array();
     }
 
@@ -45,18 +47,29 @@ class Product extends CI_Model
 
     function search($post)
     {
-        $this->db->select('*');
-        $this->db->from('Products');
+        $db['default']['options'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+        $this->db->select('products.*, AVG(reviews.rating) as rating');
+        $this->db->from('products');
+        $this->db->join('reviews', 'reviews.product_id = products.id', 'left');
         $this->db->like('product_name', $post['product_name']);
-        if(isset($post['categories'])){
+        if (isset($post['categories'])) {
             $this->db->where_in('category_id', $post['categories']);
         }
-        if($post['sort_by'] == 0){
+        $this->db->group_by('products.id');
+        $this->db->group_by('products.product_name');
+        $this->db->group_by('products.category_id');
+        $this->db->group_by('products.price');
+        $this->db->group_by('products.qty_sold');
+        $this->db->group_by('products.created_at');
+        $this->db->group_by('products.updated_at');
+        if ($post['sort_by'] == 0) {
             $this->db->order_by('price', 'ASC');
-        }else if($post['sort_by'] == 1){
+        } elseif ($post['sort_by'] == 1) {
             $this->db->order_by('price', 'DESC');
-        }else if($post['sort_by'] == 2){
+        } elseif ($post['sort_by'] == 2) {
             $this->db->order_by('qty_sold', 'DESC');
+        } elseif ($post['sort_by'] == 3) {
+            $this->db->order_by('rating', 'DESC');
         }
         $query = $this->db->get();
         return $query->result_array();
