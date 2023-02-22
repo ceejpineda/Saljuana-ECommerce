@@ -24,20 +24,20 @@
             <div class="lc-block">
                 <div editable="rich">
 
-                    <h2 class="display-5 fw-bold">Saljuana</h2>
+                    <h2 class="display-5 fw-bold">Success!</h2>
 
                 </div>
             </div>
             <div class="lc-block col-lg-6 mx-auto mb-4">
                 <div editable="rich">
 
-                    <p class="lead ">Get everything you need and more, delivered straight to your door with Saljuana.</p>
+                    <p class="lead ">Your order has been posted! Please wait for a while for a confirmation email. Meanwhile, you can browse and shop again!</p>
 
                 </div>
             </div>
 
-            <div class="lc-block d-grid gap-2 d-sm-flex justify-content-sm-center"> <a class="btn btn-primary btn-lg px-4 gap-3" href="/products/categories" role="button">Start Shopping!</a>
-                <a class="btn btn-outline-secondary btn-lg px-4" href="/users/login" role="button">Sign In/Register</a>
+            <div class="lc-block d-grid gap-2 d-sm-flex justify-content-sm-center"> 
+                <a class="btn btn-primary btn-lg px-4 gap-3" href="/products/categories" role="button">Back to Shopping!</a>
             </div>
         </div>
     </body>

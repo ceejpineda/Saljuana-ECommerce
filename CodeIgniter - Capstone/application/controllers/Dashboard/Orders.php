@@ -12,7 +12,7 @@ class Orders extends CI_Controller
     {
         if($this->session->userdata('is_admin') != 1)
         {
-            redirect('/');
+            redirect('/products/categories');
         }
         else
         {
@@ -24,7 +24,12 @@ class Orders extends CI_Controller
                 $data[$key]['shipping'] = implode(', ',$address['shipping']);
 
             }
-            $info['orders'] = $data;
+            //$info['orders'] = $data;
+            $pages = ceil(count($data)/5);
+            $page_number = $this->input->post('page')-1;
+            $paged_products = array_slice($data, $page_number*5, 5); 
+            $info['orders'] = $paged_products;
+            $info['pages'] = $pages;
             $this->load->view('dashboard/orders', $info);
         }
     }
@@ -41,6 +46,32 @@ class Orders extends CI_Controller
 
         }
         $info['orders'] = $data;
+        $pages = ceil(count($data)/5);
+        $page_number = $this->input->post('page')-1;
+        $paged_products = array_slice($data, $page_number*5, 5); 
+        $info['orders'] = $paged_products;
+        $info['pages'] = $pages;
+        $this->load->view('partials/admin_orders', $info);
+    }
+
+    public function update_status()
+    {
+        $post = $this->input->post(NULL, TRUE);
+        $this->Order->update_db_status($post);
+        $data = $this->Order->get_all_orders();
+        foreach($data as $key=>$order)
+        {
+            $address = json_decode($order['address'], true);
+            $data[$key]['billing'] = implode(', ',$address['billing']);
+            $data[$key]['shipping'] = implode(', ',$address['shipping']);
+
+        }
+        $info['orders'] = $data;
+        $pages = ceil(count($data)/5);
+        $page_number = $this->input->post('page')-1;
+        $paged_products = array_slice($data, $page_number*5, 5); 
+        $info['orders'] = $paged_products;
+        $info['pages'] = $pages;
         $this->load->view('partials/admin_orders', $info);
     }
 

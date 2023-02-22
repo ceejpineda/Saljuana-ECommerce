@@ -143,7 +143,10 @@ class Products extends CI_Controller
 
     public function edit_data($id)
     {
-        echo json_encode($this->Product->get_edit_data($id));
+        $product = $this->Product->get_edit_data($id);
+        $this->load->helper('file');
+        $product['urls'] = get_filenames($product['img_url']);
+        echo json_encode($product);
     }
 
 

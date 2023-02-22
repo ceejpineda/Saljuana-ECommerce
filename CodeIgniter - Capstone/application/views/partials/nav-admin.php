@@ -7,6 +7,6 @@
                     <a class="nav-link" href="/dashboard/orders">Order</a>
                 </div>
             </div>
-            <a class="btn logoff" type="submit">Log-Off</a>
+            <a href="/users/logout" class="btn logoff" type="submit">Log-Off</a>
         </div>
     </nav>

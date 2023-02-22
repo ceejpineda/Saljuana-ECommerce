@@ -1075,3 +1075,21 @@ nav{
     padding: 0;
     font-size: 12px;
 }
+.hero_img{
+    background-color: white;
+    color:white;
+    background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url("https://images.pexels.com/photos/3184340/pexels-photo-3184340.jpeg");
+    background-size: cover;
+    height: 900px;
+    position: absolute;
+    top: 55px;
+}
+
+.nav_landing{
+    margin-bottom: 0;
+}
+.form_register_login{
+}
+.all_forms{
+    background-color: #e7e7e71d;
+}

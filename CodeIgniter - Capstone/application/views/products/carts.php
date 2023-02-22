@@ -8,7 +8,24 @@
 <?php $this->load->view('partials/header') ?>
     <script>
         $(document).ready(function(){
-            
+
+            $(document).on('change', '.qty_cart', function(){
+                $(this).parent().submit();
+            })
+            $(document).on('submit', '.modify_item_form', function(){
+                var form = $(this);
+                $.post(form.attr('action'), form.serialize(), function(res){
+                    $('.partialized').html(res);
+                });
+                return false;
+            })
+            $(document).on('click', '.cart_delete', function(){
+                var link = $(this);
+                $.get(link.attr('href'), function(res){
+                    $('.partialized').html(res);
+                });
+                return false;
+            })
         });
     </script>
 </head>
@@ -25,7 +42,7 @@
         </div>
     </nav>
     <main class="row d-flex flex-row">
-        <section class="cart_table_section col-sm-6">
+        <section class="cart_table_section col-sm-6 partialized">
             <table class="table table-striped text-start">
                 <thead>
                     <tr>
@@ -36,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-<?php 
+<?php
 foreach($items as $item){
     $total = number_format($item['price']*$item['qty'], 2);
 ?>
@@ -44,11 +61,12 @@ foreach($items as $item){
                         <td><?=$item['product_name']?></td>
                         <td>$<?=$item['price']?></td>
                         <td class="d-flex qty_td">
-                            <form action="">
+                            <form action="/products/carts/modify_cart_item/" method="post" class="modify_item_form">
                                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
-                                <input class="form-control qty_cart text-start" type="number" name="qty" id="qty" value="<?=$item['qty']?>">
+                                <input type="hidden" name="cart_id" value="<?=$item['id']?>">
+                                <input class="form-control qty_cart text-start" type="number" name="qty" value="<?=$item['qty']?>" min="0" max="99">
                             </form>
-                            <a type="submit" class="btn btn-danger cart_delete">Delete</a>
+                            <a href="/products/carts/modify_cart_item/<?=$item['id']?>" type="submit" class="btn btn-danger cart_delete">Delete</a>
                         </td>
                         <td>$<?=$total?></td>
                     </tr>

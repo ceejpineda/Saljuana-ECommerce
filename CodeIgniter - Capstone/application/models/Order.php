@@ -32,6 +32,25 @@ class Order extends CI_Model
         return $data;
     }
 
+    function update_db_status($post)
+    {
+        $query = "UPDATE orders SET status = ? WHERE id = ?";
+        if($post['admin_orders_status'] == '1')
+        {
+            $status = 'pending';
+        }
+        else if($post['admin_orders_status'] == '2')
+        {
+            $status = 'shipped';
+        }
+        else if($post['admin_orders_status'] == '3')
+        {
+            $status = 'cancelled';
+        }
+        $values = array($status, $post['order_id']);
+        return $this->db->query($query, $values);
+    }
+
     function search_admin_order($post)
     {
         $this->db->select('orders.*, first_name, last_name');

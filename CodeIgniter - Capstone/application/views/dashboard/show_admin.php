@@ -44,8 +44,10 @@
                         </tr>
                     </thead>
                     <tbody>
-<?php 
+<?php
+$sum = 0;
 foreach($order_items as $item){
+$sum += $item['price_when_ordered'] * $item['qty']
 ?>
                         <tr>
                             <td><?=$item['product_id']?></td>
@@ -60,11 +62,11 @@ foreach($order_items as $item){
                     </tbody>
                 </table>
                 <div class="admin_order_info_status">
-                    <p class="shipped_color">Status: <span>shipped</span></p>
+                    <p class="shipped_color">Status: <span><?=$status?></span></p>
                     <aside>
-                        <span><p>Sub total: </p><p>$29.98</p></span>
-                        <span><p>Shipping: </p><p>$1.00</p></span>
-                        <span><p>Total Price: </p><p>$30.98</p></span>
+                        <span><p>Sub total: </p><p>$<?=$sum?></p></span>
+                        <span><p>Shipping: </p><p>$1.50</p></span>
+                        <span><p>Total Price: </p><p>$<?=$sum + 1.5?></p></span>
                     </aside>
                 </div>
             </aside>

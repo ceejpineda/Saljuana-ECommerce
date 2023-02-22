@@ -15,7 +15,11 @@ class Landing extends CI_Controller {
 
 	public function login_page()
 	{
-		$this->load->view('users/login');
+		if($this->session->has_userdata('user_id')){
+			redirect('/products/categories');
+		}else{
+			$this->load->view('users/login');
+		}
 	}
 
 	public function register_page()

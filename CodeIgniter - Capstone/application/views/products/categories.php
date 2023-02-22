@@ -84,7 +84,7 @@ foreach($products as $product){
 ?>
             </div>
             <section class="pagination">
-            <?php for($page = 1; $page<=$pages; $page++)
+<?php for($page = 1; $page<=$pages; $page++)
 {
 ?>
                 <input type="submit" value="<?=$page?>" class="submit_search btn btn-secondary mx-2">

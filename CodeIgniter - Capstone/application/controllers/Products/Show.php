@@ -7,37 +7,33 @@ class Show extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Product');
+        $this->load->model('Cart');
+
     }
 
     public function index($id)
     {
-        if($this->session->userdata('is_admin') != 1)
-        {
-            redirect('/');
-        }
-        else
-        {
-            $product = $this->Product->load_product_info($id);
-            $directory = $product['img_url'];
-            $similar = $this->Product->load_similar($product['category_id']);
-            $similar = array_slice($similar, 0, 6);
+        $product = $this->Product->load_product_info($id);
+        $directory = $product['img_url'];
+        $similar = $this->Product->load_similar($product['category_id']);
+        $similar = array_slice($similar, 0, 6);
 
-            $product_url = array();
+        $product_url = array();
 
-            $urls = scandir($directory);
+        $urls = scandir($directory);
 
-            foreach($urls as $k=>$url){
-                if ($k < 2) continue;
-                if ($k == 2)
-                {
-                    $product['main_img'] = $directory . '/' . $url;
-                    continue;
-                }
-                $product_url[]= $directory . '/' . $url;
+        foreach($urls as $k=>$url){
+            if ($k < 2) continue;
+            if ($k == 2)
+            {
+                $product['main_img'] = $directory . '/' . $url;
+                continue;
             }
-            $product['urls'] = $product_url;
-            $product['similar'] = $similar;
-            $this->load->view('products/show', $product);
+            $product_url[]= $directory . '/' . $url;
         }
+        $product['urls'] = $product_url;
+        $product['similar'] = $similar;
+        $product['count'] = $this->Cart->get_count();
+        $this->load->view('products/show', $product);
     }
 }

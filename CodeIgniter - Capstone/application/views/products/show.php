@@ -9,54 +9,28 @@
     <script>
 
         /*  For pagination highlight    */
-        function pageNumHighlight(pageNum){
-            $(".pagination > a").css("background-color", "white").css("color", "blue");
-            for(var i = 0; i < document.querySelectorAll(".pagination > a").length; i++){
-                if(pageNum == $(".pagination > a:nth-child(" + i + ")").text()){
-                    $(".pagination > a:nth-child(" + i + ")").css("background-color", "#1975ff").css("color", "white");
-                }
-            }
-        }
         /**********************************************/
 
         $(document).ready(function(){
+            $('.alert').hide();
+            
 
             /*  For submission of forms & updating of cart quantity    */
-            var cart_quantity = 4;
-            $(".cart_quantity").text(cart_quantity);
-            
-            $(document).on("submit", "form", function(){
-                $(".item_added_confirm").show().fadeOut(3000);
-                pageNumHighlight(pageNum);
-
-                cart_quantity += parseInt($(".new_order_qty").val().split(" ")[0]);
-                $(".cart_quantity").text(cart_quantity);
-                
+            $(document).on('submit', 'form', function(){
+                var form = $(this);
+                $.post(form.attr('action'),form.serialize(), function(){
+                    $('.alert').show();
+                    setTimeout(function() {
+                        $('.alert').fadeOut();
+                    }, 1000);
+                    $.get('/products/carts/get_cart_count', function(res){
+                        console.log(res);
+                        $('#cart_items').text(res);
+                    });
+                });
                 return false;
-            });
+            })
             /**********************************************/
-
-            /*  Pagination at footer    */
-            var pageNum = 1;
-            pageNumHighlight(pageNum);
-
-            $(document).on("click", ".pagination > a:not(.next_page)", function(){
-                pageNum = $(this).text();
-                pageNumHighlight(pageNum);
-                return false;
-            });
-            $(document).on("click", ".next_page", function(){
-                pageNum++;
-                pageNumHighlight(pageNum);
-                return false;
-            });
-            /**********************************************/
-
-            /*  For going back from previous page    */
-            $(document).on("click", ".go_back", function(){
-                history.back();
-                return false;
-            });
             /**********************************************/
 
             /*  For changing the big image    */
@@ -83,7 +57,18 @@
     </script>
 </head>
 <body>
-<?php $this->load->view('partials/nav-user') ?>
+<nav class="navbar navbar-expand-lg fixed-top" id="nav" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Saljuana</a>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            </div>
+            <div>
+                <a href="/products/carts" class="btn logoff" type="submit">Shopping Cart (<span id="cart_items"><?=$count?></span>)</a>
+                <a href="/users/logout" class="btn logoff" type="submit">Log-Off</a>
+            </div>
+        </div>
+    </nav>
+
     <main>
         <section class="item_panel d-flex flex-column">
             <input type="hidden" id="price" name="price" value="<?=$price?>"/>
@@ -120,7 +105,6 @@ foreach($urls as $url){
                                 <div class="col-sm-2">
                                     <input class="btn btn-lg btn-primary add_to_cart" type="submit" value="Add to Cart">
                                 </div>
-                                <p class="item_added_confirm">Item added to the cart.</p>
                             </div>
                         </form>
                     </aside>
@@ -146,5 +130,8 @@ foreach($similar as $item)
             </div>
         </article>
     </main>
+    <div class="alert alert-success alert-dismissible fade show fixed-top mt-5 text-center" role="alert">
+        Successfully added to cart!
+    </div>
 </body>
 </html>

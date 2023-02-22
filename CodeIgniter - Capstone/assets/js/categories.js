@@ -99,7 +99,7 @@
                         $('#cart_items').text(res);
                     });
                 });
-                //return false;
+                return false;
             })
 
             $(document).on('click', '.quick_buy_button', function(){

@@ -7,26 +7,13 @@
     <title>(Dashboard Orders)</title>
     <?php $this->load->view('partials/header') ?>
     <script>
-        /*  For pagination highlight    */
-        function pageNumHighlight(pageNum){
-            $(".pagination > a").css("background-color", "white").css("color", "blue");
-            for(var i = 0; i < document.querySelectorAll(".pagination > a").length; i++){
-                if(pageNum == $(".pagination > a:nth-child(" + i + ")").text()){
-                    $(".pagination > a:nth-child(" + i + ")").css("background-color", "#1975ff").css("color", "white");
-                }
-            }
-        }
-        /**********************************************/
-
         $(document).ready(function(){
 
             /*  Submitting of forms will redirect to specified page based on action attribute    */
-            $(document).on("submit", "form", function(){
-                //window.location = $(this).attr("action");
+            $(document).on("submit", "#search, .update_status_form", function(){
                 var form = $(this);
                 $.post(form.attr('action'),form.serialize(), function(res){
-                //$(".category_name").text($(".category_list").val());
-                    $('tbody').html(res);
+                    $('.paginated').html(res);
                 });
                 return false;
             });
@@ -36,21 +23,18 @@
             })
             /**********************************************/
 
-            /*  Pagination at footer    */
-            var pageNum = 1;
-            pageNumHighlight(pageNum);
+            $('.submit_search').click(function(){
+                $('#page').val($(this).val());
+            })
 
-            $(document).on("click", ".pagination > a:not(.next_page)", function(){
-                pageNum = $(this).text();
-                pageNumHighlight(pageNum);
-                return false;
-            });
-            $(document).on("click", ".next_page", function(){
-                pageNum++;
-                pageNumHighlight(pageNum);
-                return false;
-            });
-            /**********************************************/
+            $(document).on('click', '.submit_search', function(){
+                $('#page').val($(this).val());
+                $("#search").submit();
+            })
+
+            $(document).on('change', '.status', function(){;
+                $(this).parent().submit();
+            })
 
         });
     </script>
@@ -60,8 +44,9 @@
 
     <main>
         <p class="message_admin_orders"></p>
-        <form class="form_admin_orders" action="/dashboard/orders/do_search" method="post">
+        <form class="form_admin_orders" action="/dashboard/orders/do_search" method="post" id="search">
             <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+            <input type="hidden" name="page" value="1" id="page">
             <div class="d-flex justify-content-between">
                 <input id="order_search" class="form-control w-25" type="search" name="admin_orders_search" placeholder="search" />
                 <select id="status_select" name="admin_orders_status" class="form-select w-25">
@@ -72,6 +57,7 @@
                 </select>
             </div>
         </form>
+        <div class="paginated">
         <table class="admin_orders_table table table-striped table-hover">
             <thead>
                 <tr>
@@ -96,12 +82,13 @@ foreach($orders as $order){
                     <td><?=$order['billing']?></td>
                     <td>$<?=$order['total_amount']?></td>
                     <td>
-                        <form action="" method="post">
-                            <input type="hidden" name="product_id" value="product_id"/>
-                            <select class="form-select" name="admin_orders_update">
-                                <option <?=($order['status']=='pending')?'selected':''?>>Order in process</option>
-                                <option <?=($order['status']=='shipped')?'selected':''?>>Shipped</option>
-                                <option <?=($order['status']=='cancelled')?'selected':''?>>Cancelled</option>
+                        <form action="/dashboard/orders/update_status" method="post" class="update_status_form">
+                            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                            <input type="hidden" name="order_id" value="<?=$order['id']?>"/>
+                            <select class="form-select status" name="admin_orders_status">
+                                <option value="1" <?=($order['status']=='pending')?'selected':''?>>Order in process</option>
+                                <option value="2" <?=($order['status']=='shipped')?'selected':''?>>Shipped</option>
+                                <option value="3" <?=($order['status']=='cancelled')?'selected':''?>>Cancelled</option>
                             </select>
                         </form>
                     </td>
@@ -112,18 +99,15 @@ foreach($orders as $order){
             </tbody>
         </table>
         <section class="pagination">
-            <a href="">1</a><!--
-         --><a href="">2</a><!--
-         --><a href="">3</a><!--
-         --><a href="">4</a><!--
-         --><a href="">5</a><!--
-         --><a href="">6</a><!--
-         --><a href="">7</a><!--
-         --><a href="">8</a><!--
-         --><a href="">9</a><!--
-         --><a href="">10</a><!--
-         --><a class="next_page" href="">&rsaquo;</a>
+<?php for($page = 1; $page<=$pages; $page++)
+{
+?>
+                <input type="submit" value="<?=$page?>" class="submit_search btn btn-secondary mx-2">
+<?php 
+}
+?>
         </section>
+        </div>
     </main>
 </body>
 </html>

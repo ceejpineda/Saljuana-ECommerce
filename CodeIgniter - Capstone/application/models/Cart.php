@@ -29,9 +29,31 @@ class Cart extends CI_Model
         }
     }
 
+    function modify_qty($data)
+    {
+        if(!is_array($data))
+        {
+            $query = "DELETE FROM cart_items WHERE id = ?";
+            $value = array($data);
+            return $this->db->query($query, $value);
+        }else{
+            if($data['qty'] != 0){
+                $query = "UPDATE cart_items SET qty = ?
+                            WHERE id = ?";
+                $value = array($data['qty'], $data['cart_id']);
+                return $this->db->query($query, $value);
+            }
+            else{
+                $query = "DELETE FROM cart_items WHERE id = ?";
+                $value = array($data['cart_id']);
+                return $this->db->query($query, $value);
+            }
+        }
+    }
+
     function get_user_cart($id)
     {
-        $query = "SELECT product_id, product_name, price, cart_items.qty
+        $query = "SELECT cart_items.id, product_id, product_name, price, cart_items.qty
                     FROM cart_items
                     JOIN products ON cart_items.product_id = products.id
                     WHERE cart_items.user_id = ?";
