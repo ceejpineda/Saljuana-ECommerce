@@ -245,11 +245,13 @@
 
             /**********************************************/
 
+
+
             /*  Show the options/categories for the dummy select tag    */
-            $(document).on("click", ".dummy_select_tag", function(){
-                $(this).css("border", "2px solid black");
-                $(".product_categories").toggle();
-            });
+            // $(document).on("click", ".dummy_select_tag", function(){
+            //     $(this).css("border", "2px solid black");
+            //     $(".product_categories").toggle();
+            // });
             /**********************************************/
 
             /*  Assign the value of selected option to the dummy select tag    */
@@ -544,7 +546,6 @@
         $(document).on('submit', '#search_form, .form_delete_product', function(){
             var form = $(this);
             $.post(form.attr('action'),form.serialize(), function(res){
-                //$(".category_name").text($(".category_list").val());
                 console.log(res);
                 $('#partial').html(res);
             });
@@ -567,6 +568,30 @@
         //         $("#edit_modal_label").text('Lol');
         //     })
         // })
+
+        function handleSelectTagClick() {
+            $(this).css("border", "2px solid black");
+            $(".product_categories").toggle();
+          }
+
+
+        $(document).on("click", ".dummy_select_tag", handleSelectTagClick);
+
+        $(".product_add_category").on("input", function() {
+        console.log("Input event triggered");
+        // Check if the input has a value
+        if ($(this).val()) {
+            // If it has a value, remove the click event listener from the document
+            $(document).off("click", ".dummy_select_tag", handleSelectTagClick);
+            console.log('off');
+        } else {
+            // If it doesn't have a value, add the click event listener back to the document
+            $(document).on("click", ".dummy_select_tag", handleSelectTagClick);
+            console.log('on');
+        }
+        });
+
+
 
         $(document).on('click', '.edit_modal_button', function(){
             var link = $(this);

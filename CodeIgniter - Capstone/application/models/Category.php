@@ -17,4 +17,19 @@ class Category extends CI_Model
                     GROUP BY categories.id";
         return $this->db->query($query)->result_array();
     }
+
+     function create_category($category_name)
+    {
+        $data = array(
+            'category_name' => $category_name
+        );
+
+        // Insert the new category into the database
+        $this->db->insert('categories', $data);
+
+        // Get the ID of the inserted category
+        $category_id = $this->db->insert_id();
+
+        return $category_id;
+    }
 }

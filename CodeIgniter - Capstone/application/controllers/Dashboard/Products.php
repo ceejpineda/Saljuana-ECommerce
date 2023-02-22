@@ -17,8 +17,8 @@ class Products extends CI_Controller
         else
         {
             $products = $this->Product->load_all_products_admin();
-            $pages = ceil(count($products)/5);
-            $paged_products = array_slice($products, 0, 5);
+            $pages = ceil(count($products)/10);
+            $paged_products = array_slice($products, 0, 10);
             $data['products'] = $paged_products;
             $data['pages'] = $pages;
             //$data['products'] = $products;
@@ -55,17 +55,23 @@ class Products extends CI_Controller
             $products_info[] = $product;
         }
         //$data['products'] = $products_info;
-        $pages = ceil(count($products)/5);
+        $pages = ceil(count($products)/10);
 		$page_number = $this->input->post('page')-1;
-		$paged_products = array_slice($products_info, $page_number*5, 5); 
+		$paged_products = array_slice($products_info, $page_number*10, 10); 
 		$data['products'] = $paged_products;
 		$data['pages'] = $pages;
-        //var_dump($data);
         $this->load->view('partials/admin_products', $data);
     }
 
     public function process_add() {
         $post = $this->input->post(NULL, TRUE);
+        var_dump($post);
+        
+        if($post['product_add_category'] != ''){
+            $this->load->model('Category');
+            $id = $this->Category->create_category($post['product_add_category']);
+            $post['category_id'] = $id;
+        }
 
         if (!empty($_FILES['product_img_file']['name'][0])) {
             // Files were uploaded, so process them
@@ -125,7 +131,7 @@ class Products extends CI_Controller
             $this->Product->add_product($post);
             $products = $this->Product->load_all_products_admin();
             $data['products'] = $products;
-            $this->index();
+            //redirect('/dashboard/products');
         } else {
             // No files were uploaded
             echo "You did not select any files to upload.";
@@ -137,8 +143,12 @@ class Products extends CI_Controller
         $this->Product->delete_by_id($id);
         $products = $this->Product->load_all_products_admin();
         $data['products'] = $products;
+        $pages = ceil(count($products)/10);
+        $paged_products = array_slice($products, 0, 10);
+        $data['products'] = $paged_products;
+        $data['pages'] = $pages;
+        //$data['products'] = $products;
         $this->load->view('partials/admin_products', $data);
-
     }
 
     public function edit_data($id)

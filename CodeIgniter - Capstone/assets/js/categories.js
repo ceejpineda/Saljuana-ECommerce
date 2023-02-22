@@ -103,7 +103,7 @@
             })
 
             $(document).on('click', '.quick_buy_button', function(){
-                $('.quick_buy').submit();
+                $(this).parent().submit();
                 return false;
             })
         });

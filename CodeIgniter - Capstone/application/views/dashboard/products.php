@@ -91,7 +91,7 @@ foreach($products as $product){
             <form class="form_product_add_edit" action="/dashboard/products/process_add" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
-                    <input class="product_category_id" type="hidden" name="category_id" value= '0' id="product_category_id" />
+                    <input class="product_category_id" type="hidden" name="category_id" value= '999' id="product_category_id" />
                     <label class="form-label">Name:</label>
                     <input class="form-control" type="text" name="product_name" id="product_name">
                     <label class="form-label">Description:</label>
@@ -103,7 +103,7 @@ foreach($products as $product){
                         </ul>
                     </div>
                     <label class="form-label">Add new category:</label>
-                    <input class="form-control" type="text" name="product_add_category"/>
+                    <input class="form-control product_add_category" type="text" name="product_add_category"/>
                     <label class="form-label">Price:</label>
                     <input class="input_product_price form-control" type="number" id="product_price" name="product_price" min="0.01" step="0.01"/>
                     <label class="form-label">Quantity (Inventory):</label>
