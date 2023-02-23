@@ -130,5 +130,7 @@ class Order extends CI_Model
         }
         $this->db->where('user_id', $this->session->userdata('user_id'));
         $this->db->delete('cart_items');
+
+        
     }
 }

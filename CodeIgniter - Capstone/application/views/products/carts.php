@@ -5,29 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>(Carts Page) Shopping Cart | Lashopda</title>
+    <script type="text/javascript" src="https://js.stripe.com/v3/"></script>    
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="<?= base_url('assets/js/carts_stripe.js') ?>" defer></script>
 <?php $this->load->view('partials/header') ?>
-    <script>
-        $(document).ready(function(){
-
-            $(document).on('change', '.qty_cart', function(){
-                $(this).parent().submit();
-            })
-            $(document).on('submit', '.modify_item_form', function(){
-                var form = $(this);
-                $.post(form.attr('action'), form.serialize(), function(res){
-                    $('.partialized').html(res);
-                });
-                return false;
-            })
-            $(document).on('click', '.cart_delete', function(){
-                var link = $(this);
-                $.get(link.attr('href'), function(res){
-                    $('.partialized').html(res);
-                });
-                return false;
-            })
-        });
-    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top" id="nav" data-bs-theme="dark">
@@ -76,12 +57,12 @@ foreach($items as $item){
                 </tbody>
             </table>
             <section class="cart_total_section">
-                <h4>Total: <span class="cart_total_amount">$<?=$sum?></span></h4>
+                <h4>Total: <span class="cart_total_amount">$<span id="all_total"><?=$sum?></span></span></h4>
                 <a class="btn btn-primary mt-3" href="/products/categories">Continue Shopping</a>
             </section>
         </section>
         <section class="cart_billing_section col-sm-6 p-4">
-            <form class="d-flex flex-column" action="/products/carts/finalize_order" method="post">
+            <form class="d-flex flex-column" action="/products/carts/finalize_order" method="post" id="paymentForm">
                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                 <div class="row d-flex">
                     <div class="d-flex flex-column col-sm-6">
@@ -124,23 +105,8 @@ foreach($items as $item){
                     </div>
 
                 </div>
-                    <div>
-                        <h2>Card Information</h2>
-                        <div class="input-group">
-                            <input class="form-control" type="number" name="card_number" placeholder="Card Number"/>
-                            <input class="form-control" type="number" name="card_security" placeholder="Security Number"/></span>
-                        </div>
-                        <label class="form-label">Expiration: </label>
-                        <div class="d-flex justify-content-between">
-                            <div class="input-group w-50">
-                                    <input class="form-control" type="number" name="card_exp_month" placeholder="(mm)"/>
-                                    <input class="form-control" type="number" name="card_exp_year" placeholder="(year)"/>
-                                </div>
-                            <input class="btn btn-primary" type="submit" value="Pay"/>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                    </form>
+                    <a class="btn btn-primary" id="tryPay">Pay</a>
         </section>
     </main>
 </body>

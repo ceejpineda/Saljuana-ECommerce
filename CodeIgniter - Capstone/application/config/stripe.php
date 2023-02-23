@@ -1,0 +1,3 @@
+<?php
+$config['stripe_publishable_key'] = 'pk_test_51MXHo7AKSx4zWvWkQZYZK3QubCyHuVnbJKQYzlfyQ3psAXrFkANreJoSu5Ec2YC51JNlQ7RmJ6nKcPUHHyUTadxv00Yw8K4bmd';
+$config['stripe_secret_key'] = 'sk_test_51MXHo7AKSx4zWvWkAviHRazhgbivg2IDv3T4PbNHeqYyJVKkwfpNlTxwpspFkJjWiQnyXSit9hsCjubPhJjVbGAe00HzedIaRL';

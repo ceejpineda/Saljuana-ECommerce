@@ -11,6 +11,16 @@ class Cart extends CI_Model
         return $this->db->query($query, $value)->row_array()['count'];
     }
 
+    function get_total()
+    {
+        $query = "SELECT SUM(cart_items.qty * products.price) AS total_amount
+                    FROM cart_items
+                    JOIN products ON cart_items.product_id = products.id
+                    WHERE cart_items.user_id = ?";
+        $value = array($this->session->userdata('user_id'));
+        return $this->db->query($query, $value)->row_array();
+    }
+
     function insert_to_cart_items($data)
     {
         $existing_cart_item = $this->db->get_where('cart_items', array('user_id' => $data['user_id'], 'product_id' => $data['product_id']))->row();

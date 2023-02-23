@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use Stripe\StripeClient;
 
 class Carts extends CI_Controller 
 {
@@ -67,13 +68,41 @@ class Carts extends CI_Controller
     public function finalize_order()
     {
         $this->load->Model('Order');
+        //var_dump($this->input->post());
         $post = $this->input->post(NULL, TRUE);
-        var_dump($post);
-        return;
         $cart_items = $this->Cart->get_user_cart($this->session->userdata('user_id'));
-        //var_dump($cart_items);
+        if(count($cart_items) == 0){
+            echo 'YOU HAVE NO ITEMS TO CHECKOUT';
+        }
         $this->Order->place_order($post, $cart_items);
         $this->load->view('products/success');
+    }
+
+    public function pay_stripe()
+    {
+        $amount = (float)$this->Cart->get_total()['total_amount'];
+        require_once('application/libraries/stripe-php/init.php');
+     
+        $stripeSecret = 'sk_test_51MXHo7AKSx4zWvWkAviHRazhgbivg2IDv3T4PbNHeqYyJVKkwfpNlTxwpspFkJjWiQnyXSit9hsCjubPhJjVbGAe00HzedIaRL';
+   
+        \Stripe\Stripe::setApiKey($stripeSecret);
+        
+        $stripe = \Stripe\Charge::create ([
+                "amount" => $amount * 100,
+                "currency" => "usd",
+                "source" => $this->input->post('tokenId'),
+                "description" => "Payment from Saljuana.ph ."
+        ]);
+            
+            
+        $data = array('success' => true, 'data'=> $stripe);
+   
+        echo json_encode($data);
+    }
+
+    public function cart_total()
+    {
+       echo $this->Cart->get_total()['total_amount'];
     }
 
 }
