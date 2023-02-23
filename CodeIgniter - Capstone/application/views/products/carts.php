@@ -55,7 +55,7 @@
                 <tbody>
 <?php
 foreach($items as $item){
-    $total = number_format($item['price']*$item['qty'], 2);
+    $total = (float)$item['price']*$item['qty'];
 ?>
                     <tr>
                         <td><?=$item['product_name']?></td>

@@ -46,7 +46,7 @@ class Carts extends CI_Controller
         $sum = 0;
         foreach($cart_items as $key=>$item)
         {
-            $cart_items[$key]['total'] = number_format(($item['price'] * (float)$item['qty']));
+            $cart_items[$key]['total'] = ($item['price'] * (float)$item['qty']);
             $sum += $cart_items[$key]['total'];
         }
         $data['items'] = $cart_items;
@@ -66,9 +66,10 @@ class Carts extends CI_Controller
 
     public function finalize_order()
     {
-        echo 'hello';
         $this->load->Model('Order');
         $post = $this->input->post(NULL, TRUE);
+        var_dump($post);
+        return;
         $cart_items = $this->Cart->get_user_cart($this->session->userdata('user_id'));
         //var_dump($cart_items);
         $this->Order->place_order($post, $cart_items);

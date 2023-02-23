@@ -17,5 +17,6 @@ class Reviews extends CI_Controller
         }
         $this->Review->insert_review($post);
         var_dump($post);
+        redirect("/products/show/{$post['product_id']}");
     }
 }
