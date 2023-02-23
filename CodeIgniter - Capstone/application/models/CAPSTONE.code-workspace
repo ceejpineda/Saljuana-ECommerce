@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "../../../../../EXAM"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "CAPSTONE"
+	}
+}

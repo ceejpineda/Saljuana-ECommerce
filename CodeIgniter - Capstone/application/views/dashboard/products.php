@@ -16,7 +16,6 @@
         <p class="message_admin_products"></p>
         <div class="d-flex justify-content-between">
             <form class="form_admin_products_search w-25" id="search_form" action="/dashboard/products/do_search" method="post">
-                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                 <input type="hidden" name="page" value="1" id="page">
                 <input class="form-control" type="search" id="admin_search" name="admin_search" placeholder="search">
             </form>
@@ -46,7 +45,6 @@ foreach($products as $product){
                     <td><?=$product['qty_sold']?></td>
                     <td>
                         <form action="/dashboard/products/delete/<?=$product['id']?>" method="post" class="form_delete_product">
-                            <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                             <a class="btn btn-outline-primary edit_modal_button" data-bs-toggle="modal" data-bs-target="#edit_modal" href="/dashboard/products/edit_data/<?=$product['id']?>">Edit</a>
                             <input type="submit" class="btn btn-primary delete_product" value="Delete">
                         </form>
@@ -90,7 +88,6 @@ foreach($products as $product){
             </div>
             <form class="form_product_add_edit" action="/dashboard/products/process_add" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                     <input class="product_category_id" type="hidden" name="category_id" value= '999' id="product_category_id" />
                     <input class="product_edit_id" type="hidden" name="product_edit_id" value= '999' id="product_category_id" />
                     <label class="form-label">Name:</label>
@@ -134,7 +131,6 @@ foreach($products as $product){
             </div>
             <form class="form_product_add_edit" action="/dashboard/products/process_add" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                     <input class="product_edit_id" type="hidden" name="product_edit_id" value= '999' id="product_category_id" />
                     <input class="product_category_id" type="hidden" name="category_id" value= '0' id="product_category_id" />
                     <label class="form-label">Name:</label>
@@ -183,7 +179,7 @@ foreach($products as $product){
                 <p>Are you sure you want to delete "<span class="category_name">Shirt</span>" category?</p>
                 <div>
                     <form action="" method="post">
-                        <input class="category_id" type="hidden" name="category_id" value="id"/>
+                        <!-- <input class="category_id" type="hidden" name="category_id" value="id"/> -->
                         <input type="submit" value="Yes" />
                     </form>
                     <button type="button">No</button>

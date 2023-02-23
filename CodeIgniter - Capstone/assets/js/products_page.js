@@ -209,7 +209,6 @@
                         '<li class="d-flex align-items-center product_category_edit_delete_section arr_' + i + '">' +
     
                             '\n\t<form class="form_product_category_edit" action="" method="post">' +
-                            '<input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />'+
 
                                 '\n\t\t<input class="product_category_id" type="hidden" name="category_id" value= '+category_id+' />' +
                                 '\n\t\t<input class="product_category_text_input" readonly type="text" value="' + category_name + '"/>' +

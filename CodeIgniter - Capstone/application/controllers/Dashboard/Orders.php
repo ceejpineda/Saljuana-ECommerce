@@ -86,5 +86,10 @@ class Orders extends CI_Controller
         $this->load->view('dashboard/show_admin', $data);
     }
 
+    public function order_history()
+    {
+        
+    }
+
 
 }

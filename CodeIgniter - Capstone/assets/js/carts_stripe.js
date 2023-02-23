@@ -1,6 +1,20 @@
 
 $(document).ready(function(){
 
+    $('#billing_checkbox').change(function() {
+        // if the checkbox is checked
+        if ($(this).is(':checked')) {
+        // copy the values of the shipping input fields to the billing input fields
+        $('input[name="first_name_bill"]').val($('input[name="first_name_ship"]').val());
+        $('input[name="last_name_bill"]').val($('input[name="last_name_ship"]').val());
+        $('input[name="address_bill"]').val($('input[name="address_ship"]').val());
+        $('input[name="address2_bill"]').val($('input[name="address2_ship"]').val());
+        $('input[name="city_bill"]').val($('input[name="city_ship"]').val());
+        $('input[name="state_bill"]').val($('input[name="state_ship"]').val());
+        $('input[name="zipcode_bill"]').val($('input[name="zipcode_ship"]').val());
+        }
+    });
+
     $(document).on('change', '.qty_cart', function(){
         $(this).parent().submit();
     })

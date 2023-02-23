@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(Carts Page) Shopping Cart | Lashopda</title>
+    <title>(Carts Page) Shopping Cart | Saljuana</title>
     <script type="text/javascript" src="https://js.stripe.com/v3/"></script>    
     <script src="https://checkout.stripe.com/checkout.js"></script>
     <script src="<?= base_url('assets/js/carts_stripe.js') ?>" defer></script>
@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg fixed-top" id="nav" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Saljuana</a>
+            <a class="navbar-brand" href="/">Saljuana</a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             </div>
             <div>
@@ -58,6 +58,7 @@ foreach($items as $item){
             </table>
             <section class="cart_total_section">
                 <h4>Total: <span class="cart_total_amount">$<span id="all_total"><?=$sum?></span></span></h4>
+                <a class="btn btn-primary mt-3" href="/products/carts/order_history">Order History</a>
                 <a class="btn btn-primary mt-3" href="/products/categories">Continue Shopping</a>
             </section>
         </section>
@@ -99,7 +100,7 @@ foreach($items as $item){
                         <label class="form-label">Zipcode: </label>
                         <input class="form-control" type="number" name="zipcode_bill"/>
                         <div class="form-check mt-3">
-                            <input class="form-check-input"  type="checkbox" name="billing_info" value="same_shipping" />
+                            <input class="form-check-input" id="billing_checkbox"  type="checkbox" name="billing_info" value="same_shipping" />
                             <label class="form-check-label" for="billing_checkbox">Same as Shipping</label>
                         </div>
                     </div>

@@ -13,7 +13,6 @@ class Categories extends CI_Controller
 
     public function index()
     {
-
             $products = $this->Product->load_all_products();
 
             $category_count = $this->Category->load_all_category_count();

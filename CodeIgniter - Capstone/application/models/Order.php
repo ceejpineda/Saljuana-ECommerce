@@ -130,7 +130,13 @@ class Order extends CI_Model
         }
         $this->db->where('user_id', $this->session->userdata('user_id'));
         $this->db->delete('cart_items');
-
-        
+    }
+    function get_history()
+    {
+        $query = " SELECT orders.*, first_name, last_name FROM orders 
+                    JOIN users
+                    WHERE users.id = ?";
+        $value = array($this->session->userdata('user_id'));
+        return $this->db->query($query, $value)->result_array();
     }
 }

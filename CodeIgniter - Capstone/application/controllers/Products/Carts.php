@@ -105,4 +105,22 @@ class Carts extends CI_Controller
        echo $this->Cart->get_total()['total_amount'];
     }
 
+    public function order_history()
+    {
+        $data['count'] = $this->Cart->get_count();
+        $this->load->Model('Order');
+        $orders = $this->Order->get_history();
+
+        foreach($orders as $key=>$order)
+        {
+            $address = json_decode($order['address'], true);
+            $orders[$key]['billing'] = implode(', ',$address['billing']);
+            $orders[$key]['shipping'] = implode(', ',$address['shipping']);
+
+        }
+        $data['orders'] = $orders;
+        //var_dump($orders);
+        $this->load->view('products/history', $data);
+    }
+
 }
