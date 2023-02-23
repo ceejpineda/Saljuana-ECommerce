@@ -8,6 +8,7 @@ class Orders extends CI_Controller
         parent::__construct();
         $this->load->model('Order');
     }
+    
     public function index()
     {
         if($this->session->userdata('is_admin') != 1)

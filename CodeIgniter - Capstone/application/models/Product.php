@@ -131,4 +131,36 @@ class Product extends CI_Model
         return $this->db->query($query, $values);
     }
 
+    function get_sold_products($sort)
+    {
+        if($sort == 0){
+            $query = "SELECT product_name, qty_sold
+            FROM products
+            ORDER BY qty_sold DESC
+            LIMIT 10";
+            return $this->db->query($query)->result_array();
+        }else if($sort == 1){
+            $query = "SELECT product_name, AVG(rating) as avg_rating 
+                        FROM products
+                        JOIN reviews ON products.id = reviews.product_id
+                        GROUP BY product_name
+                        ORDER BY avg_rating DESC
+                        LIMIT 10;";
+            return $this->db->query($query)->result_array();
+        }else if($sort == 2){
+            $query = "SELECT product_name, inventory_count
+            FROM products
+            ORDER BY inventory_count ASC
+            LIMIT 20";
+            return $this->db->query($query)->result_array();
+        }else if($sort == 3){
+            $query = "SELECT categories.category_name, MAX(products.qty_sold) as max_qty_sold
+            FROM products
+            JOIN categories ON products.category_id = categories.id
+            GROUP BY categories.category_name
+            ORDER BY max_qty_sold DESC";
+            return $this->db->query($query)->result_array();
+        }
+    }
+
 }

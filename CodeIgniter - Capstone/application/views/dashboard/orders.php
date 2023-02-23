@@ -41,7 +41,6 @@
 </head>
 <body>
 <?php $this->load->view('partials/nav-admin') ?>
-
     <main>
         <p class="message_admin_orders"></p>
         <form class="form_admin_orders" action="/dashboard/orders/do_search" method="post" id="search">

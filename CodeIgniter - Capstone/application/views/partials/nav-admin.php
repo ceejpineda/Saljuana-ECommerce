@@ -5,6 +5,7 @@
                 <div class="navbar-nav">
                     <a class="nav-link" href="/dashboard/products">Products</a>
                     <a class="nav-link" href="/dashboard/orders">Order</a>
+                    <a class="nav-link" href="/dashboard/analytics">Analytics</a>
                 </div>
             </div>
             <a href="/users/logout" class="btn logoff" type="submit">Log-Off</a>
