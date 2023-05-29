@@ -7,6 +7,7 @@ Saljuana is a comprehensive e-commerce website built using the PHP Codeigniter f
 Saljuana encompasses a variety of features for users and administrators, making it a versatile e-commerce solution. The key features of the project include:
 
 ### User Features
+
     - **User Authentication**: Secure user registration and login functionality.
     - **Item Filtering with Ajax**: Filter products based on various attributes using asynchronous requests.
     - **Advanced Filters**: Refine product searches using advanced filters such as price range, category, etc.
@@ -17,6 +18,7 @@ Saljuana encompasses a variety of features for users and administrators, making 
     - **Stripe Integration**: Seamless integration of Stripe payment gateway for secure transactions.
 
 ### Admin Features
+
     - **Product Management**: Add, edit, and update product information from the admin panel.
     - **Order Management**: View a list of orders and track their status.
     - **Order Details**: Access detailed information about a specific order.
