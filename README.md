@@ -1,4 +1,4 @@
-# Saljuana-ECommerce
+# 🏪 Saljuana-ECommerce 💸
 
 Saljuana is a comprehensive e-commerce website built using the PHP Codeigniter framework. It provides a range of features for both users and administrators, enabling smooth and efficient online shopping experiences. This README.md file serves as a guide to understanding the project structure and functionality.
 
