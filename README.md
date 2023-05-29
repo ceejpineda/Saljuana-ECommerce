@@ -8,22 +8,22 @@ Saljuana encompasses a variety of features for users and administrators, making 
 
 ### User Features
 
-    - **User Authentication**: Secure user registration and login functionality.
-    - **Item Filtering with Ajax**: Filter products based on various attributes using asynchronous requests.
-    - **Advanced Filters**: Refine product searches using advanced filters such as price range, category, etc.
-    - **Rating System**: Users can rate products and provide feedback.
-    - **Comment System**: Users can leave comments and engage in discussions about products.
-    - **Order History**: Maintain a record of user orders for easy reference.
-    - **Quick Buy**: Simplify the purchasing process with a quick buy feature.
-    - **Stripe Integration**: Seamless integration of Stripe payment gateway for secure transactions.
+- **User Authentication**: Secure user registration and login functionality.
+- **Item Filtering with Ajax**: Filter products based on various attributes using asynchronous requests.
+- **Advanced Filters**: Refine product searches using advanced filters such as price range, category, etc.
+- **Rating System**: Users can rate products and provide feedback.
+- **Comment System**: Users can leave comments and engage in discussions about products.
+- **Order History**: Maintain a record of user orders for easy reference.
+- **Quick Buy**: Simplify the purchasing process with a quick buy feature.
+- **Stripe Integration**: Seamless integration of Stripe payment gateway for secure transactions.
 
 ### Admin Features
 
-    - **Product Management**: Add, edit, and update product information from the admin panel.
-    - **Order Management**: View a list of orders and track their status.
-    - **Order Details**: Access detailed information about a specific order.
-    - **Product Example**: Provide a sample product view for reference.
-    - **Seller Analytics**: Generate graphical statistics and insights to track seller performance.
+- **Product Management**: Add, edit, and update product information from the admin panel.
+- **Order Management**: View a list of orders and track their status.
+- **Order Details**: Access detailed information about a specific order.
+- **Product Example**: Provide a sample product view for reference.
+- **Seller Analytics**: Generate graphical statistics and insights to track seller performance.
 
 
 ## Usage and Installation
@@ -31,17 +31,19 @@ Saljuana encompasses a variety of features for users and administrators, making 
 You can use composer or WAMP/XAMPP to host the PHP project.
 
 For composer:
-    1. Clone the repository: git clone https://github.com/your-username/saljuana.git
-    2. Navigate to the project directory: cd saljuana
-    3. Install the dependencies: composer install
-    4. Configure the database connection in application/config/database.php
-    5. Run the database migrations: php index.php migrate
-    6. Serve the application using a local development server: php -S localhost:8000
-    7. Access the application in your browser at http://localhost:8000
+
+1. Clone the repository: git clone https://github.com/your-username/saljuana.git
+2. Navigate to the project directory: cd saljuana
+3. Install the dependencies: composer install
+4. Configure the database connection in application/config/database.php
+5. Run the database migrations: php index.php migrate
+6. Serve the application using a local development server: php -S localhost:8000
+7. Access the application in your browser at http://localhost:8000
 
 For XAMPP/WAMP:
-    1. Setup your virtualhost and make the root directory of the project's folder for the XAMPP virtual host main '/'.
-    2. Access the virtualhost in the browser
+
+1. Setup your virtualhost and make the root directory of the project's folder for the XAMPP virtual host main '/'.
+2. Access the virtualhost in the browser
 
 
 ## Contributing
