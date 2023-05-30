@@ -54,3 +54,11 @@ Contributions to Saljuana are welcome! If you would like to contribute, please f
 3. Make the necessary changes and commit your work: git commit -am 'Add new feature'
 4. Push your changes to the branch: git push origin my-feature-branch
 5. Submit a pull request with a detailed description of your changes.
+
+## Screenshots
+
+1. Landing Page
+	- ![Screenshot (2)](https://github.com/ceejpineda/Saljuana-ECommerce/assets/57590361/c16b202d-175a-4efd-b94b-50897814e4f4)
+
+2. Login/Registration
+	- ![image](https://github.com/ceejpineda/Saljuana-ECommerce/assets/57590361/ec2e69e5-6e70-412a-b916-651edb717b53)
